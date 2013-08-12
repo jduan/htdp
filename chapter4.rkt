@@ -60,3 +60,8 @@
 (equal-to-462 10)
 (equal-to-462 12)
 (equal-to-462 14)
+
+;; Exercise 4.3.1
+;; The one on the left is legal. The one on the right is not.
+;; The following is legal because the 2nd clause is malformed.
+
