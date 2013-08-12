@@ -125,3 +125,16 @@
   (* (area-of-disk radius) height))
 
 (volume-cylinder 5 10)
+
+;; Exercise 3.3.3
+(define (circumfence radius)
+  (* 2 pi radius))
+
+(define (area-surrounding radius height)
+  (* (circumfence radius) height))
+
+(define (area-cylinder radius height)
+  (+ (area-surrounding radius height)
+     (* 2 (area-of-disk radius))))
+
+(area-cylinder 5 10)
