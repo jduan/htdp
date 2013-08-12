@@ -86,3 +86,26 @@
 (interest 500)
 (interest 2000)
 (interest 10000)
+
+;; Exercise 4.4.2
+
+(define (tax gross-pay)
+  (cond
+    ((<= gross-pay 240) 0)
+    ((<= gross-pay 480) (* 15/100 gross-pay))
+    (else (* 28/100 gross-pay))))
+
+(= 0 (tax 10))
+(= 0 (tax 240))
+(= 45 (tax 300))
+(= 72 (tax 480))
+(= 140 (tax 500))
+
+(define (gross-pay hours)
+  (* 12 hours))
+
+(define (netpay hours)
+  (- (gross-pay hours) (tax (gross-pay hours))))
+
+(= 12 (netpay 1))
+(= 408 (netpay 40))
