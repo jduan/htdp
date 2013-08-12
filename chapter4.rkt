@@ -74,3 +74,15 @@
 ;; when n is 500, the result is 40
 ;; when n is 2800, the result is 121
 ;; when n is 15000, the result is 495
+
+;; Exercise 4.4.1
+
+(define (interest amount)
+  (cond
+    ((<= amount 1000) (* 4/100 amount))
+    ((<= amount 5000) (* 45/1000 amount))
+    (else (* 5/100 amount))))
+
+(interest 500)
+(interest 2000)
+(interest 10000)
