@@ -138,3 +138,20 @@
 (= 5.75 (pay-back 1400))
 (= 10.0 (pay-back 2000))
 (= 14.75 (pay-back 2600))
+
+;; Exercise 4.4.4
+
+(define (how-many a b c)
+  (let [(result (- (sqr b) (* 4 a c)))]
+    (cond
+      [(> result 0) 2]
+      [(= result 0) 1]
+      [else 0])))
+
+(= 2 (how-many 1 0 -1))
+(= 1 (how-many 2 4 2))
+(= 1 (how-many 1 2 1))
+(= 2 (how-many 2 4 1))
+(= 0 (how-many 2 4 3))
+(= 2 (how-many 1 0 -1))
+(= 1 (how-many 2 4 2))
