@@ -54,3 +54,33 @@
            (/ 1 n)))
 (two-minus-n-reverse 2)
 (two-minus-n-reverse 9)
+
+;; Exercise 2.3.1
+(define (wage h)
+  (* h 12))
+
+(define (tax grosspay)
+  (* 0.15 grosspay))
+
+(tax 2000)
+
+(define (netpay hour)
+  (* (- 1 0.15) (wage hour)))
+
+(netpay 40)
+
+;; Exercise 2.3.2
+(define (sum-coins pennies nickels dimes quarters)
+  (+ pennies
+     (* 5 nickels)
+     (* 10 dimes)
+     (* 25 quarters)))
+
+(sum-coins 34 432 23 1232)
+
+;; Exercise 2.3.3
+(define (total-profit attendees)
+  (- (* 5 attendees)
+     (+ 20 (* 0.5 attendees))))
+
+(total-profit 100)
