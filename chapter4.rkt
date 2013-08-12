@@ -65,3 +65,12 @@
 ;; The one on the left is legal. The one on the right is not.
 ;; The following is legal because the 2nd clause is malformed.
 
+;; Exercise 4.3.2
+;; when n is 500, the result is 0.40
+;; when n is 2800, the result is 0.45
+;; when n is 15000, the result is 0.60
+
+;; Exercise 4.3.3
+;; when n is 500, the result is 40
+;; when n is 2800, the result is 121
+;; when n is 15000, the result is 495
