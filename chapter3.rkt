@@ -138,3 +138,18 @@
      (* 2 (area-of-disk radius))))
 
 (area-cylinder 5 10)
+
+;; Exercise 3.3.4
+(define (outter-radius inner-radius thickness)
+  (+ inner-radius thickness))
+
+(define (area-of-ring outter-radius inner-radius)
+  (- (area-of-disk outter-radius)
+     (area-of-disk inner-radius)))
+
+(define (area-pipe inner-radius length thickness)
+  (+ (* 2 (area-of-ring (outter-radius inner-radius thickness) inner-radius))
+     (area-surrounding (outter-radius inner-radius thickness) length)
+     (area-surrounding inner-radius length)))
+
+(area-pipe 5 10 2)
