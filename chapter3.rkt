@@ -162,3 +162,19 @@
   (* 0.5 (v g t) t))
 
 (height 5 10)
+
+;; Exercise 3.3.6
+(define (Celsius->Fahrenheit n)
+  (+ 32 (/ (* 9 n) 5)))
+
+(Celsius->Fahrenheit 0)
+(Celsius->Fahrenheit 30)
+(Celsius->Fahrenheit 38)
+
+(define (Fahrenheit->Celsius n)
+  (* (/ 5 9) (- n 32)))
+
+(define (I f)
+  (Celsius->Fahrenheit (Fahrenheit->Celsius f)))
+
+(I 32)
