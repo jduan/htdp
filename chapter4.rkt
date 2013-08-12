@@ -109,3 +109,32 @@
 
 (= 12 (netpay 1))
 (= 408 (netpay 40))
+
+;; Exercise 4.4.3
+
+(define (pay-back-0-500 charge)
+  (* 0.0025 charge))
+
+(define (pay-back-500-1500 charge)
+  (+ (pay-back-0-500 500)
+     (* 0.005 (- charge 500))))
+
+(define (pay-back-1500-2500 charge)
+  (+ (pay-back-500-1500 1500)
+     (* 0.0075 (- charge 1500))))
+
+(define (pay-back-2500+ charge)
+  (+ (pay-back-1500-2500 2500)
+     (* 0.01 (- charge 2500))))
+
+(define (pay-back charge)
+  (cond
+    [(<= charge 500) (pay-back-0-500 charge)]
+    [(<= charge 1500) (pay-back-500-1500 charge)]
+    [(<= charge 2500) (pay-back-1500-2500 charge)]
+    [else (pay-back-2500+ charge)]))
+
+(= 1 (pay-back 400))
+(= 5.75 (pay-back 1400))
+(= 10.0 (pay-back 2000))
+(= 14.75 (pay-back 2600))
