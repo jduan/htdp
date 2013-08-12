@@ -32,3 +32,8 @@
 
 (define (outside x)
   (not (and (>= x 1) (<= x 3))))
+
+;; Exercise 4.2.2
+;; (-3 0)
+;; ()
+;; < 1 or > 5
