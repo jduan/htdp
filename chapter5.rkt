@@ -53,3 +53,18 @@
 (symbol=? 'none (what-kind 2 4 3))
 (symbol=? 'two (what-kind 1 0 -1))
 (symbol=? 'one (what-kind 2 4 2))
+
+;; Exercise 5.1.5
+
+(define (check-color target1 target2 guess1 guess2)
+  (cond
+    [(and (symbol=? target1 guess1) (symbol=? target2 guess2)) 'Perfect]
+    [(or (symbol=? target1 guess1) (symbol=? target2 guess2)) 'OneColorAtCorrectPosition]
+    [(or (symbol=? target1 guess2) (symbol=? target2 guess1)) 'OneColorOccurs]
+    [else 'NothingCorrect]))
+
+(symbol=? (check-color 'red 'green 'red 'green') 'Perfect)
+(symbol=? (check-color 'red 'green 'red 'purple) 'OneColorAtCorrectPosition)
+(symbol=? (check-color 'red 'green 'purple 'red) 'OneColorOccurs)
+(symbol=? (check-color 'green 'red 'red 'purple) 'OneColorOccurs)
+(symbol=? (check-color 'green 'blue 'red 'purple) 'NothingCorrect)
