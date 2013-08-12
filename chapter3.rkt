@@ -78,3 +78,41 @@
 (profit 30)
 (profit 40)
 (profit 50)
+
+;; Exercise 3.3.1
+(define CM-PER-INCH 2.54)
+(define INCH-PER-FOOT 12)
+(define FEET-PER-YARD 3)
+(define YARD-PER-ROD 5.5)
+(define ROD-PER-FURLONG 40)
+(define FURLONG-PER-MILE 8)
+
+(define (inches->cm n)
+  (* CM-PER-INCH n))
+(define (feet->inches n)
+  (* INCH-PER-FOOT n))
+(define (yards->feet n)
+  (* FEET-PER-YARD n))
+(define (rods->yards n)
+  (* YARD-PER-ROD n))
+(define (furlongs->rods n)
+  (* ROD-PER-FURLONG n))
+(define (miles->furlongs n)
+  (* FURLONG-PER-MILE n))
+
+(define (feet->cm n)
+  (* (feet->inches n) (inches->cm n)))
+(define (yards->cm n)
+  (* (yards->feet n) (feet->cm n)))
+(define (rods->inches n)
+  (* (rods->yards n) (yards->feet n) (feet->inches n)))
+(define (miles->feet n)
+  (* (miles->furlongs n)
+     (furlongs->rods n)
+     (rods->yards n)
+     (yards->feet n)))
+
+;; should be 5280
+(miles->feet 1)
+;; should be 91.44
+(yards->cm 1)
