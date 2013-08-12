@@ -153,3 +153,12 @@
      (area-surrounding inner-radius length)))
 
 (area-pipe 5 10 2)
+
+;; Exercise 3.3.5
+(define (v g t)
+  (* g t))
+
+(define (height g t)
+  (* 0.5 (v g t) t))
+
+(height 5 10)
