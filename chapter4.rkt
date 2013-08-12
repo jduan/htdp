@@ -37,3 +37,26 @@
 ;; (-3 0)
 ;; ()
 ;; < 1 or > 5
+
+;; Exercise 4.2.3
+(define (equal-to-62 n)
+  (= 62 (+ 2 (* 4 n))))
+(equal-to-62 10)
+(equal-to-62 12)
+(equal-to-62 14)
+(equal-to-62 15)
+
+(define (equal-to-102 n)
+  (= 102 (* 2 n n)))
+(equal-to-102 10)
+(equal-to-102 12)
+(equal-to-102 14)
+
+(define (equal-to-462 n)
+  (= 462
+     (+ (* 4 n n)
+        (* 6 n)
+        2)))
+(equal-to-462 10)
+(equal-to-462 12)
+(equal-to-462 14)
