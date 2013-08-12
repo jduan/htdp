@@ -35,3 +35,21 @@
 (symbol=? 'TooSmall (check-guess3 1 2 3 500))
 (symbol=? 'TooLarge (check-guess3 1 2 3 100))
 (symbol=? 'Perfect (check-guess3 1 2 3 321))
+
+;; Exercise 5.1.4
+(define (what-kind a b c)
+  (let [(discriminant (- (sqr b) (* 4 a c)))]
+    (cond
+      [(zero? a) 'degenerate]
+      [(> discriminant 0) 'two]
+      [(= discriminant 0) 'one]
+      [(< discriminant 0) 'none])))
+
+(symbol=? 'two (what-kind ))
+(symbol=? 'two (what-kind 1 0 -1))
+(symbol=? 'one (what-kind 2 4 2))
+(symbol=? 'one (what-kind 1 2 1))
+(symbol=? 'two (what-kind 2 4 1))
+(symbol=? 'none (what-kind 2 4 3))
+(symbol=? 'two (what-kind 1 0 -1))
+(symbol=? 'one (what-kind 2 4 2))
