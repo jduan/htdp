@@ -116,3 +116,12 @@
 (miles->feet 1)
 ;; should be 91.44
 (yards->cm 1)
+
+;; Exercise 3.3.2
+(define (area-of-disk radius)
+  (* pi (sqr radius)))
+
+(define (volume-cylinder radius height)
+  (* (area-of-disk radius) height))
+
+(volume-cylinder 5 10)
