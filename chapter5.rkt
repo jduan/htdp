@@ -12,3 +12,14 @@
 (symbol=? (reply 'GoodAfternoon) 'INeedANap)
 (symbol=? (reply 'GoodEvening) 'BoyAmITired)
 
+;; Exercise 5.1.2
+
+(define (check-guess guess target)
+  (cond
+    [(< guess target) 'TooSmall]
+    [(= guess target) 'Perfect]
+    [(> guess target) 'TooLarge]))
+
+(symbol=? 'Perfect (check-guess 1 1))
+(symbol=? 'TooSmall (check-guess 1 2))
+(symbol=? 'TooLarge (check-guess 1 0))
