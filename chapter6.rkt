@@ -28,13 +28,6 @@
 (draw-circle (make-posn X-BULBS Y-YELLOW) BULB-RADIUS 'yellow)
 (draw-circle (make-posn X-BULBS Y-GREEN) BULB-RADIUS 'green)
 
-(define (draw-bulb color)
-  (cond
-    [(symbol=? color 'red) (draw-solid-disk (make-posn X-BULBS Y-RED) BULB-RADIUS 'red) ]
-    [(symbol=? color 'yellow) (draw-solid-disk (make-posn X-BULBS Y-YELLOW) BULB-RADIUS 'yellow) ]
-    [(symbol=? color 'green) (draw-solid-disk (make-posn X-BULBS Y-GREEN) BULB-RADIUS 'green) ]
-    [else "wrong color"]))
-
 (define (clear-bulb color)
   (cond
     [(symbol=? color 'red)
@@ -47,3 +40,15 @@
      (and (clear-solid-disk (make-posn X-BULBS Y-GREEN) BULB-RADIUS 'green)
           (draw-circle (make-posn X-BULBS Y-GREEN) BULB-RADIUS 'green))]
     [else "wrong color"]))
+
+;; Exercise 6.2.3
+(define (draw-bulb color)
+  (cond
+    [(symbol=? color 'red)
+     (draw-solid-disk (make-posn X-BULBS Y-RED) BULB-RADIUS 'red) ]
+    [(symbol=? color 'yellow)
+     (draw-solid-disk (make-posn X-BULBS Y-YELLOW) BULB-RADIUS 'yellow) ]
+    [(symbol=? color 'green)
+     (draw-solid-disk (make-posn X-BULBS Y-GREEN) BULB-RADIUS 'green) ]
+    [else "wrong color"]))
+
