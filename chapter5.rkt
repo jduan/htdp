@@ -1,3 +1,5 @@
+#lang racket
+
 ;; Exercise 5.1.1
 
 (define (reply s)
@@ -63,7 +65,7 @@
     [(or (symbol=? target1 guess2) (symbol=? target2 guess1)) 'OneColorOccurs]
     [else 'NothingCorrect]))
 
-(symbol=? (check-color 'red 'green 'red 'green') 'Perfect)
+(symbol=? (check-color 'red 'green 'red 'green) 'Perfect)
 (symbol=? (check-color 'red 'green 'red 'purple) 'OneColorAtCorrectPosition)
 (symbol=? (check-color 'red 'green 'purple 'red) 'OneColorOccurs)
 (symbol=? (check-color 'green 'red 'red 'purple) 'OneColorOccurs)

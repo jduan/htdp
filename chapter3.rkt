@@ -1,3 +1,4 @@
+#lang racket
 ;; Exercise 3.1.2
 ;; maximize profit of movie theater
 
