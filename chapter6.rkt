@@ -80,3 +80,9 @@
 ;; draw the light with the red bulb turned on
 (start WIDTH HEIGHT)
 (draw-bulb 'red)
+
+;; Exercise 6.3.1
+(define-struct movie (title producer))
+(define jobs (make-movie 'Jobs 'Kutcher))
+(symbol=? 'Jobs (movie-title jobs))
+(symbol=? 'Kutcher (movie-producer jobs))
