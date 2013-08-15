@@ -86,3 +86,19 @@
 (define jobs (make-movie 'Jobs 'Kutcher))
 (symbol=? 'Jobs (movie-title jobs))
 (symbol=? 'Kutcher (movie-producer jobs))
+
+;; Exercise 6.3.2
+(symbol=? 'ThePhantomMenace
+          (movie-title (make-movie 'ThePhantomMenace 'Lucas)))
+(symbol=? 'Lucas
+          (movie-producer (make-movie 'TheEmpireStrikesBack 'Lucas)))
+
+(define-struct star (last first instrument sales))
+
+(define (increment-sales a-star)
+  (make-star (star-last a-star)
+             (star-first a-star)
+             (star-instrument a-star)
+             (+ (star-sales a-star) 20000)))
+
+(= 32200 (star-sales (increment-sales (make-star 'Abba 'John 'vocals 12200))))
