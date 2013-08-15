@@ -16,7 +16,7 @@
 (define BULB-RADIUS 20)
 (define BULB-DISTANCE 10)
 
-;; the positions of the bulbs 
+;; the positions of the bulbs
 (define X-BULBS (quotient WIDTH 2))
 (define Y-RED (+ BULB-DISTANCE BULB-RADIUS))
 (define Y-YELLOW (+ Y-RED BULB-DISTANCE (* 2 BULB-RADIUS)))
@@ -52,3 +52,31 @@
      (draw-solid-disk (make-posn X-BULBS Y-GREEN) BULB-RADIUS 'green) ]
     [else "wrong color"]))
 
+;; Exercise 6.2.4
+(define (switch from to)
+  (and (clear-bulb from)
+       (draw-bulb to)))
+
+;; Exercise 6.2.5
+(define (next current-color)
+  (cond
+    [(and (symbol=? current-color 'red) (switch 'red 'green))
+     'green]
+    [(and (symbol=? current-color 'yellow) (switch 'yellow 'red))
+     'red]
+    [(and (symbol=? current-color 'green) (switch 'green 'yellow))
+     'yellow]))
+(define WIDTH 50)
+(define HEIGHT 160)
+(define BULB-RADIUS 20)
+(define BULB-DISTANCE 10)
+
+;; the positions of the bulbs
+(define X-BULBS (quotient WIDTH 2))
+(define Y-RED (+ BULB-DISTANCE BULB-RADIUS))
+(define Y-YELLOW (+ Y-RED BULB-DISTANCE (* 2 BULB-RADIUS)))
+(define Y-GREEN (+ Y-YELLOW BULB-DISTANCE (* 2 BULB-RADIUS)))
+
+;; draw the light with the red bulb turned on
+(start WIDTH HEIGHT)
+(draw-bulb 'red)
