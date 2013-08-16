@@ -181,3 +181,15 @@
 (in-circle? (make-circle (make-posn 6 5) 1 'blue) (make-posn 6 5))
 (in-circle? (make-circle (make-posn 6 5) 1 'green) (make-posn 5.5 5))
 (not (in-circle? (make-circle (make-posn 6 5) 1 'yellow) (make-posn 1 5)))
+
+;; Exercise 6.6.4
+;; translate-circle : circle, delta -> circle
+;; translate a circle to another circle which is delta pixel to the right of the
+;; original one
+(define (translate-circle circle delta)
+  (make-circle
+    (make-posn (+ delta (posn-x (circle-center circle)))
+               (posn-y (circle-center circle)))
+    (circle-radius circle)
+    (circle-color circle)))
+(= 10 (posn-x (circle-center (translate-circle (make-circle (make-posn 0 0) 5 'blue) 10))))
