@@ -144,3 +144,16 @@
 ;;   (posn-y (circle-center circle))
 ;;   (circle-radius circle)
 ;;   (circle-color circle)
+
+;; Exercise 6.6.2
+;; draw-a-circle: circle -> true
+;; draws the disk on the screen
+(define (draw-a-circle circle)
+  (draw-circle (circle-center circle)
+               (circle-radius circle)
+               (circle-color circle)))
+(start 300 300)
+(draw-a-circle
+  (make-circle (make-posn 100 100)
+               100
+               'red))
