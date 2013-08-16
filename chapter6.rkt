@@ -102,3 +102,32 @@
              (+ (star-sales a-star) 20000)))
 
 (= 32200 (star-sales (increment-sales (make-star 'Abba 'John 'vocals 12200))))
+
+;; Exercise 6.3.3
+(define-struct jet-fighters (designation accelation top-speed range))
+
+(define (within-range jet range)
+  (< range (jet-fighters-range jet)))
+
+(within-range (make-jet-fighters 'f22 'fast 2000 5000) 4000)
+
+(define (reduce-range jet)
+  (make-jet-fighters
+    (jet-fighters-designation jet)
+    (jet-fighters-accelation jet)
+    (jet-fighters-top-speed jet)
+    (* 8/10 (jet-fighters-range jet))))
+
+(= 4000 (jet-fighters-range (reduce-range (make-jet-fighters 'f22 'fast 2000 5000))))
+
+;; Exercise 6.4.2
+;; number number number
+(define-struct time (hours minutes seconds))
+
+;; Exercise 6.5.2
+(define (time->seconds time)
+  (+ (* 60 60 (time-hours time))
+     (* 60 (time-minutes time))
+     (time-seconds time)))
+
+(= 45002 (time->seconds (make-time 12 30 2)))
