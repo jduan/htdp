@@ -131,3 +131,16 @@
      (time-seconds time)))
 
 (= 45002 (time->seconds (make-time 12 30 2)))
+
+;; Exercise 6.6.1
+;; center is a posn structure
+;; radius is a number
+;; color is a symbol
+(define-struct circle (center radius color))
+
+;; template
+;; (define (fun-for-circle circle)
+;;   (posn-x (circle-center circle))
+;;   (posn-y (circle-center circle))
+;;   (circle-radius circle)
+;;   (circle-color circle)
