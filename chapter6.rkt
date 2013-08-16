@@ -157,3 +157,27 @@
   (make-circle (make-posn 100 100)
                100
                'red))
+
+;; Exercise 6.6.3
+;; distance: posn1, posn2 -> float
+;; returns the distance between two points
+(define (distance posn1 posn2)
+  (sqrt (+ (sqr (- (posn-x posn1) (posn-x posn2)))
+           (sqr (- (posn-y posn1) (posn-y posn2))))))
+(= (sqrt 2) (distance (make-posn 1 1) (make-posn 2 2)))
+;; in-circle? : circle, posn -> bool
+;; check if a pixel (posn) is in a circle or not
+(define (in-circle? circle posn)
+  (<= (distance (circle-center circle) posn)
+      (circle-radius circle)))
+(in-circle? (make-circle (make-posn 6 2)
+                         1
+                         'red)
+            (make-posn 6 1.5))
+(not (in-circle? (make-circle (make-posn 6 2)
+                              1
+                              'red)
+                 (make-posn 8 6)))
+(in-circle? (make-circle (make-posn 6 5) 1 'blue) (make-posn 6 5))
+(in-circle? (make-circle (make-posn 6 5) 1 'green) (make-posn 5.5 5))
+(not (in-circle? (make-circle (make-posn 6 5) 1 'yellow) (make-posn 1 5)))
