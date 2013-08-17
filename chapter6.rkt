@@ -1,4 +1,5 @@
 (require lang/posn)
+(require htdp/draw)
 ;; Exercise 6.1.1
 
 (define (distance-to-0 a-posn)
@@ -193,3 +194,9 @@
     (circle-radius circle)
     (circle-color circle)))
 (= 10 (posn-x (circle-center (translate-circle (make-circle (make-posn 0 0) 5 'blue) 10))))
+
+;; Exercise 6.6.5
+(define (clear-a-circle a-circle)
+  (clear-circle (circle-center a-circle)
+                (circle-radius a-circle)))
+(clear-a-circle (make-circle (make-posn 100 100) 100 'red))
