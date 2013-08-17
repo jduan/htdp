@@ -30,3 +30,14 @@
 
 (= (area (make-square (make-posn 2 2) 3)) 9)
 (= (* 400 pi) (area (make-circle (make-posn 30 30) 20)))
+
+;; Exercise 7.2.1
+(define-struct spider (legs space))
+(define-struct elephant (space))
+(define-struct monkey (intelligence space))
+
+(define (fits? animal volume)
+  (cond
+    [(spider? animal) (< (spider-space animal) volume)]
+    [(elephant? animal) (< (elephant-space animal) volume)]
+    [(monkey? animal) (< (monkey-space animal) volume)]))
