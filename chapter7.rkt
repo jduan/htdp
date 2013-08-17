@@ -52,3 +52,10 @@
 (checked-area-of-disk 'fjdsk)
 (checked-area-of-disk 33)
 (checked-area-of-disk -33)
+
+;; Exercise 7.5.3
+(define-struct vec (x y))
+(define (checked-make-vec x y)
+  (cond
+    [(and (positive? x) (positive? y)) (make-vec x y)]
+    [else 'checked-make-vec "x and y must be positive numbers"]))
