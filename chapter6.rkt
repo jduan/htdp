@@ -232,3 +232,30 @@
                    (rectangle-height rect)
                    (rectangle-color rect)))
 (draw-a-rectangle (make-rectangle (make-posn 100 100) 50 50 'red))
+
+;; Exercise 6.6.9
+;; check if x < y < x + len
+(define (between x y len)
+  (and (<= x y) (<= y (+ x len))))
+(between 1 2 1)
+;; check if a pixel is inside a rectangle
+(define (in-rectangle? rect pixel)
+  (let [(rect-x (posn-x (rectangle-nw-corner rect)))
+        (rect-y (posn-y (rectangle-nw-corner rect)))
+        (pixel-x (posn-x pixel))
+        (pixel-y (posn-y pixel))]
+    (and
+      (between rect-x pixel-x (rectangle-width rect))
+      (between rect-y pixel-y (rectangle-height rect)))))
+
+(define rectangle1
+  (make-rectangle (make-posn 2 3) 3 2 'red))
+(in-rectangle? rectangle1 (make-posn 4 4))
+(not (in-rectangle? rectangle1 (make-posn 8 6)))
+(not (in-rectangle? rectangle1 (make-posn 5 2.9)))
+(not (in-rectangle? rectangle1 (make-posn 5.1 3)))
+(define example-rectangle1 (make-rectangle (make-posn 20 20) 260 260 'red))
+(not (in-rectangle? example-rectangle1 (make-posn 0 0)))
+(not (in-rectangle? example-rectangle1 (make-posn 25 0)))
+(not (in-rectangle? example-rectangle1 (make-posn 0 25)))
+(in-rectangle? example-rectangle1 (make-posn 25 25))
