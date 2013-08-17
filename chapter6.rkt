@@ -200,3 +200,23 @@
   (clear-circle (circle-center a-circle)
                 (circle-radius a-circle)))
 (clear-a-circle (make-circle (make-posn 100 100) 100 'red))
+
+;; Exercise 6.6.6
+(define (draw-and-clear-circle a-circle)
+  (draw-a-circle a-circle)
+  (sleep-for-a-while 2)
+  (clear-a-circle a-circle))
+(draw-and-clear-circle (make-circle (make-posn 100 100) 100 'red))
+
+(define (move-a-circle delta a-circle)
+  (cond
+    [(draw-and-clear-circle a-circle) (translate-circle a-circle delta)]
+    [else a-circle]))
+(move-a-circle 50 (make-circle (make-posn 100 100) 100 'red))
+
+(define (circle-animation a-circle delta)
+  (draw-and-clear-circle
+    (move-a-circle delta
+                   (move-a-circle delta
+                                  (move-a-circle delta a-circle)))))
+(circle-animation (make-circle (make-posn 100 100) 50 'red) 50)
