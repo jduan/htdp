@@ -41,3 +41,14 @@
     [(spider? animal) (< (spider-space animal) volume)]
     [(elephant? animal) (< (elephant-space animal) volume)]
     [(monkey? animal) (< (monkey-space animal) volume)]))
+
+;; Exercise 7.5.1
+(define (checked-area-of-disk radius)
+  (cond
+    [(and (number? radius) (positive? radius))
+     (* pi radius radius)]
+    [else 'checked-area-of-disk "must be positive number"]))
+
+(checked-area-of-disk 'fjdsk)
+(checked-area-of-disk 33)
+(checked-area-of-disk -33)
