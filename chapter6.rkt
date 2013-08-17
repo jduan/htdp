@@ -259,3 +259,13 @@
 (not (in-rectangle? example-rectangle1 (make-posn 25 0)))
 (not (in-rectangle? example-rectangle1 (make-posn 0 25)))
 (in-rectangle? example-rectangle1 (make-posn 25 25))
+
+;; Exercise 6.6.10
+;; move a rectangle to the right by delta
+(define (translate-rectangle rect delta)
+  (make-rectangle
+    (make-posn (+ delta (posn-x (rectangle-nw-corner rect)))
+               (posn-y (rectangle-nw-corner rect)))
+    (rectangle-width rect)
+    (rectangle-height rect)
+    (rectangle-color rect)))
