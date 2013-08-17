@@ -220,3 +220,6 @@
                    (move-a-circle delta
                                   (move-a-circle delta a-circle)))))
 (circle-animation (make-circle (make-posn 100 100) 50 'red) 50)
+
+;; Exercise 6.6.7
+(define-struct rectangle (nw-corner width height color))
