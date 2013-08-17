@@ -269,3 +269,10 @@
     (rectangle-width rect)
     (rectangle-height rect)
     (rectangle-color rect)))
+
+;; Exercise 6.6.11
+;; clear a rectangle from the canvas
+(define (clear-a-rectangle rect)
+  (clear-solid-rect (rectangle-nw-corner rect)
+                    (rectangle-width rect)
+                    (rectangle-height rect)))
