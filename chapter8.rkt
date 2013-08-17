@@ -53,3 +53,10 @@
 (close-enough? (distance-to-0-for-3 '(3 4 12)) 13)
 (close-enough? (distance-to-0-for-3 '(1 1 1)) (sqrt 3))
 (close-enough? (distance-to-0-for-3 '(-1 2 -1)) (sqrt 6))
+
+;; Exercise 9.1.4
+(define (contains-2-doll? lst)
+  (or (symbol=? 'doll (first lst))
+      (symbol=? 'doll (first (rest lst)))))
+(contains-2-doll? '(doll what))
+(contains-2-doll? '(hello what))
