@@ -223,3 +223,12 @@
 
 ;; Exercise 6.6.7
 (define-struct rectangle (nw-corner width height color))
+
+;; Exercise 6.6.8
+;; draw a rectangle and fill it with color
+(define (draw-a-rectangle rect)
+  (draw-solid-rect (rectangle-nw-corner rect)
+                   (rectangle-width rect)
+                   (rectangle-height rect)
+                   (rectangle-color rect)))
+(draw-a-rectangle (make-rectangle (make-posn 100 100) 50 50 'red))
