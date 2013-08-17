@@ -29,12 +29,21 @@
 (define (contains-doll? a-list-of-symbols)
   (cond
     [(empty? a-list-of-symbols) false]
-    [else (cond
-            [(symbol=? 'doll (first a-list-of-symbols)) true]
-            [else (contains-doll? (rest a-list-of-symbols))])]))
+    [else (or (symbol=? 'doll (first a-list-of-symbols))
+              (contains-doll? (rest a-list-of-symbols)))]))
 
 (contains-doll? empty)
 (contains-doll? '(ball))
 (contains-doll? '(arrow doll))
 (contains-doll? '(bow arrow ball))
 
+;; Exercise 9.3.3
+;; check if sym occurrs on the list
+(define (contains? sym lst)
+  (cond
+    [(empty? lst) false]
+    [else (or (symbol=? sym (first lst))
+              (contains? sym (rest lst)))]))
+(contains? 'doll empty)
+(contains? 'doll (cons 'doll empty))
+(contains? 'doll (cons 'rocket empty))
