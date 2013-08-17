@@ -19,3 +19,14 @@
 
 (= (perimeter (make-square (make-posn 2 2) 3)) 12)
 (= (* 40 pi) (perimeter (make-circle (make-posn 30 30) 20)))
+
+;; Exercise 7.1.3
+;; area : shape -> number
+;; compute the area of a shape
+(define (area a-shape)
+  (cond
+    [(square? a-shape) (sqr (square-length a-shape))]
+    [(circle? a-shape) (* pi (sqr (circle-radius a-shape)))]))
+
+(= (area (make-square (make-posn 2 2) 3)) 9)
+(= (* 400 pi) (area (make-circle (make-posn 30 30) 20)))
