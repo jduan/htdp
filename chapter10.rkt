@@ -69,3 +69,13 @@
             (cons (first los) (substitute new old (rest los))))]))
 
 (equal? '(robot Barbie dress) (substitute 'Barbie 'doll '(robot doll dress)))
+
+;; Exercise 10.1.7
+(define (recall ty lon)
+  (cond
+    [(empty? lon) empty]
+    [else (if (symbol=? ty (first lon))
+            (recall ty (rest lon))
+            (cons (first lon) (recall ty (rest lon))))]))
+
+(equal? '(doll dress) (recall 'robot '(robot doll dress)))
