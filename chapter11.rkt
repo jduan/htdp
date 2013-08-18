@@ -45,3 +45,13 @@
 (equal? 0 (depth (make-deep-list 'hello 0)))
 (equal? 3 (depth (make-deep-list 'hello 3)))
 (equal? 5 (depth (make-deep-list 'hello 5)))
+
+(define (random-n-m n m)
+  (+ (random (- m n)) n))
+
+;; Exercise 11.3.2
+(define (tie-dyed n)
+  (if (zero? n)
+    empty
+    (cons (random-n-m 20 120) (tie-dyed (sub1 n)))))
+(tie-dyed 5)
