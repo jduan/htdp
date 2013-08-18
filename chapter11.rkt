@@ -55,3 +55,57 @@
     empty
     (cons (random-n-m 20 120) (tie-dyed (sub1 n)))))
 (tie-dyed 5)
+
+;; Factorial
+(define (! n)
+  (if (zero? n)
+    1
+    (* n (! (sub1 n)))))
+(equal? 3628800 (! 10))
+
+;; Exercise 11.4.2
+(define (product n m)
+  (if (= n m)
+    1
+    (* (product n (sub1 m)) m)))
+(equal? 30240 (product 5 10))
+(equal? 10 (product 9 10))
+
+(define (product-from-20 n)
+  (product 20 n))
+(equal? (product-from-20 30) 109027350432000)
+
+(define (add-to-pie n)
+  (if (zero? n)
+    pi
+    (add1 (add-to-pie (sub1 n)))))
+(equal? (+ pi 3) (add-to-pie 3))
+
+;; Exercise 11.5.1
+(define (add n x)
+  (if (zero? n)
+    x
+    (add (sub1 n) (add1 x))))
+(equal? (add 10 20) 30)
+(equal? (add 10 0) 10)
+(equal? (add 0 10) 10)
+(equal? (add 10 10) 20)
+
+(define (multiply n x)
+  (cond
+    [(= n 0) 0]
+    [else (add x (multiply (sub1 n) x))]))
+(equal? 15 (multiply 5 3))
+
+(define (exponent n x)
+  (if (zero? n)
+    1
+    (multiply x (exponent (sub1 n) x))))
+(equal? (exponent 10 2) 1024)
+
+(define (addDL n m)
+  (if (symbol? n)
+    m
+    (addDL (first n) (cons m empty))))
+(equal? 15 (depth (addDL (make-deep-list 'hello 5)
+                        (make-deep-list 'hello 10))))
