@@ -122,3 +122,13 @@
 
 (delta '(1) '())
 (delta '(2 4 537) '(2 5 212))
+
+;; Exercise 9.5.7
+(define (average-price prices)
+  (cond
+    [(empty? prices) (error 'average-price "list can't be empty")]
+    [else (/ (sum prices)
+             (length prices))]))
+(= 1 (average-price '(1)))
+(= 1 (average-price '(0.50 1.50)))
+(= 3.00 (average-price '(1.25 3.75 4.00)))
