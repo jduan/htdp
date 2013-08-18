@@ -64,3 +64,14 @@
     [(empty? lst) 0]
     [else (+ 1 (how-many-symbols (rest lst)))]))
 (= 3 (how-many-symbols '(hello world everyone)))
+
+;; Exercise 9.5.3
+(define (dollar-store? lst)
+  (cond
+    [(empty? lst) true]
+    [else (and (< (first lst) 1)
+               (dollar-store? (rest lst)))]))
+(dollar-store? '(0.99 0.98 0.50))
+(dollar-store? empty)
+(not (dollar-store? '(0.75 1.95 0.25)))
+(dollar-store? '(0.15 0.05 0.25))
