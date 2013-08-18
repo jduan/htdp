@@ -37,3 +37,12 @@
                 (convertFC (rest lof)))]))
 
 (equal? '(0 100 30) (convertFC '(32 212 86)))
+
+;; Exercise 10.1.4
+(define (convert-euro lon rate)
+  (cond
+    [(empty? lon) empty]
+    [else (cons (* rate (first lon))
+                (convert-euro (rest lon) rate))]))
+
+(equal? '(0.88) (convert-euro '(0.50) 1.76))
