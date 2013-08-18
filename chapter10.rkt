@@ -79,3 +79,14 @@
             (cons (first lon) (recall ty (rest lon))))]))
 
 (equal? '(doll dress) (recall 'robot '(robot doll dress)))
+
+;; Exercise 10.1.8
+(define (controller amount)
+  (let* [(dollars (quotient amount 100))
+         (cents (remainder amount 100))
+         (d-sym (if (> dollars 1) 'dollars 'dollar))
+         (c-sym (if (> cents 1) 'cents 'cent))]
+    (list dollars d-sym 'and cents c-sym)))
+
+(equal? '(1 dollar and 3 cents) (controller 103))
+(equal? '(32 dollars and 78 cents) (controller 3278))
