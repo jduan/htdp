@@ -29,3 +29,19 @@
                           (cons (make-posn 1 -4)
                                 empty))))
         (tabulate-f 4))
+
+;; Exercise 11.2.4
+(define (make-deep-list sym n)
+  (if (zero? n)
+    sym
+    (cons (make-deep-list sym (sub1 n)) empty)))
+(equal? 'hello (make-deep-list 'hello 0))
+(equal? '(((hello))) (make-deep-list 'hello 3))
+
+(define (depth dlist)
+  (if (symbol? dlist)
+    0
+    (add1 (depth (first dlist)))))
+(equal? 0 (depth (make-deep-list 'hello 0)))
+(equal? 3 (depth (make-deep-list 'hello 3)))
+(equal? 5 (depth (make-deep-list 'hello 5)))
