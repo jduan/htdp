@@ -46,3 +46,16 @@
                 (convert-euro (rest lon) rate))]))
 
 (equal? '(0.88) (convert-euro '(0.50) 1.76))
+
+;; Exercise 10.1.5
+(define (eliminate-exp ua lotp)
+  (cond
+    [(empty? lotp) empty]
+    [else (cond
+            [(<= (first lotp) ua)
+             (cons (first lotp)
+                   (eliminate-exp ua (rest lotp)))]
+            [else
+             (eliminate-exp ua (rest lotp))])]))
+
+(equal? '(0.95 1.0) (eliminate-exp 1.0 '(2.95 0.95 1.0 5)))
