@@ -47,3 +47,13 @@
 (contains? 'doll empty)
 (contains? 'doll (cons 'doll empty))
 (contains? 'doll (cons 'rocket empty))
+
+;; Exercise 9.5.1
+(define (sum a-list-of-nums)
+  (cond
+    [(empty? a-list-of-nums) 0]
+    [else (+ (first a-list-of-nums)
+             (sum (rest a-list-of-nums)))]))
+(= 0 (sum empty))
+(= 1 (sum (cons 1.00 empty)))
+(= 20.86 (sum '(17.05 1.22 2.59)))
