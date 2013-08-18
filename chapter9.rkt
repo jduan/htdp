@@ -115,3 +115,10 @@
     [(< (convert digits) target) 'TooSmall]
     [(> (convert digits) target) 'TooLarge]
     [else 'Perfect]))
+
+;; Exercise 9.5.6
+(define (delta start-prices end-prices)
+  (- (sum end-prices) (sum start-prices)))
+
+(delta '(1) '())
+(delta '(2 4 537) '(2 5 212))
