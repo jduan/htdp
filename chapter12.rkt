@@ -55,3 +55,16 @@
   (sort-mail-by-name example-list-of-mail-messages))
 
 (mail-name (first example-list-of-mail-messages-sorted-by-name))
+
+;; check if a number occurs in a sorted list of numbers
+(define (search-sorted n alon)
+  (if (empty? alon)
+    false
+    (cond
+      [(< n (first alon)) false]
+      [else (or
+              (= n (first alon))
+              (search-sorted n (rest alon)))])))
+
+(search-sorted 2 '(1 2 3 4))
+(search-sorted 2 '(1 3 4))
