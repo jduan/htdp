@@ -27,3 +27,13 @@
 (equal? '(140 280 420) (hours->wages '(10 20 30)))
 (equal? '(28 196 2954) (hours->wages '(2 14 211)))
 
+(define (f->c degree)
+  (* 5/9 (- degree 32)))
+
+(define (convertFC lof)
+  (cond
+    [(empty? lof) empty]
+    [else (cons (f->c (first lof))
+                (convertFC (rest lof)))]))
+
+(equal? '(0 100 30) (convertFC '(32 212 86)))
