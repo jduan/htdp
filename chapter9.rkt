@@ -57,3 +57,10 @@
 (= 0 (sum empty))
 (= 1 (sum (cons 1.00 empty)))
 (= 20.86 (sum '(17.05 1.22 2.59)))
+
+;; Exercise 9.5.2
+(define (how-many-symbols lst)
+  (cond
+    [(empty? lst) 0]
+    [else (+ 1 (how-many-symbols (rest lst)))]))
+(= 3 (how-many-symbols '(hello world everyone)))
