@@ -66,12 +66,27 @@
 (= 3 (how-many-symbols '(hello world everyone)))
 
 ;; Exercise 9.5.3
-(define (dollar-store? lst)
+(define (all-below? lst threshold)
   (cond
     [(empty? lst) true]
-    [else (and (< (first lst) 1)
-               (dollar-store? (rest lst)))]))
+    [else (and (< (first lst) threshold)
+               (all-below? (rest lst) threshold))]))
+(define (dollar-store? lst)
+  (all-below? lst 1))
 (dollar-store? '(0.99 0.98 0.50))
 (dollar-store? empty)
 (not (dollar-store? '(0.75 1.95 0.25)))
 (dollar-store? '(0.15 0.05 0.25))
+
+;; Exercise 9.5.4
+(define (check-range1 lst)
+  (cond
+    [(empty? lst) true]
+    (else (and (<= 5 (first lst) 95)
+               (check-range1 (rest lst))))))
+
+(check-range1 empty)
+(check-range1 '(50))
+(check-range1 '(101))
+(check-range1 '(45 52 23 44 96 22))
+
