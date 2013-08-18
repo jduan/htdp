@@ -90,3 +90,28 @@
 (check-range1 '(101))
 (check-range1 '(45 52 23 44 96 22))
 
+;; Exercise 9.5.5
+;; convert a list of digits into a number
+;; the first digit is the least significant and so on
+(define (convert digits)
+  (cond
+    [(empty? digits) 0]
+    [else (+ (first digits)
+             (* 10 (convert (rest digits))))]))
+(= 321 (convert '(1 2 3)))
+
+;; convert a list of digits into a number
+;; the first digit is the most significant and so on
+(define (convert2 digits)
+  (cond
+    [(empty? digits) 0]
+    [(= (length digits) 1) (first digits)]
+    [else (convert2 (cons (+ (* 10 (first digits)) (first (rest digits)))
+                          (rest (rest digits))))]))
+(= 123 (convert2 '(1 2 3)))
+
+(define (check-guess-for-list digits target)
+  (cond
+    [(< (convert digits) target) 'TooSmall]
+    [(> (convert digits) target) 'TooLarge]
+    [else 'Perfect]))
