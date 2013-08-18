@@ -59,3 +59,13 @@
              (eliminate-exp ua (rest lotp))])]))
 
 (equal? '(0.95 1.0) (eliminate-exp 1.0 '(2.95 0.95 1.0 5)))
+
+;; Exercise 10.1.6
+(define (substitute new old los)
+  (cond
+    [(empty? los) empty]
+    [else (if (symbol=? old (first los))
+            (cons new (substitute new old (rest los)))
+            (cons (first los) (substitute new old (rest los))))]))
+
+(equal? '(robot Barbie dress) (substitute 'Barbie 'doll '(robot doll dress)))
