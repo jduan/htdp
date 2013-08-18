@@ -90,3 +90,13 @@
 
 (equal? '(1 dollar and 3 cents) (controller 103))
 (equal? '(32 dollars and 78 cents) (controller 3278))
+
+
+;; structure: ir is a struct of a name and a price
+(define-struct ir (name price))
+
+(define (sum an-inv)
+  (cond
+    [(empty? an-inv) 0]
+    [else (+ (ir-price (first an-inv))
+             (sum (rest an-inv)))]))
