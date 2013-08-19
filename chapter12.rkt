@@ -68,3 +68,12 @@
 
 (search-sorted 2 '(1 2 3 4))
 (search-sorted 2 '(1 3 4))
+
+;; Add an object to the end of a list
+(define (add-at-end obj lst)
+  (if (empty? lst)
+    (cons obj empty)
+    (cons (first lst)
+          (add-at-end obj (rest lst)))))
+
+(equal? (add-at-end 6 '(1 2 3 4 5)) '(1 2 3 4 5 6))
