@@ -77,3 +77,39 @@
           (add-at-end obj (rest lst)))))
 
 (equal? (add-at-end 6 '(1 2 3 4 5)) '(1 2 3 4 5 6))
+
+;; to create a list of all re-arrangements of the letters in a word
+;; a word is a list of symbols
+(define (arrangements a-word)
+  (cond
+    [(empty? a-word) (list empty)]
+    [else (add-letter-to-list-of-words (first a-word)
+                                       (arrangements (rest a-word)))]))
+;; add a letter to a list of words
+(define (add-letter-to-list-of-words letter low)
+  (cond
+    [(empty? low) empty]
+    [else (append (add-letter-to-word letter (first low))
+                  (add-letter-to-list-of-words letter (rest low)))]))
+;; add a letter to a word at different locations
+(define (add-letter-to-word letter word)
+  (cond
+    [(empty? word) (list (list letter))]
+    [else (cons (cons letter word)
+                (add-at-beginning (first word)
+                                  (add-letter-to-word letter (rest word))))]))
+
+;; add a letter to the beginning of every word in a list of words
+(define (add-at-beginning letter words)
+  (cond
+    [(empty? words) empty]
+    [else (cons (cons letter (first words))
+                (add-at-beginning letter (rest words)))]))
+
+(add-at-beginning 'a '((b c) (c b)))
+(add-letter-to-word 'a '(b))
+(add-letter-to-list-of-words 'a '((b)))
+(arrangements empty)
+(arrangements '(a))
+(arrangements '(a b))
+(arrangements '(a b c))
