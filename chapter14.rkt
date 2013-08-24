@@ -22,3 +22,17 @@
 
 (equal? false (blue-eyed-ancestor? Carl))
 (equal? true (blue-eyed-ancestor? Gustav))
+
+;; Exercise 14.1.3
+(define (count-persons node)
+  (cond
+    [(empty? node) 0]
+    [else (+ 1
+             (count-persons (child-father node))
+             (count-persons (child-mother node)))]))
+
+(equal? 0 (count-persons empty))
+(equal? 1 (count-persons Carl))
+(equal? 1 (count-persons Fred))
+(equal? 3 (count-persons Adam))
+(equal? 5 (count-persons Gustav))
