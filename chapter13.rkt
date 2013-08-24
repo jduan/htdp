@@ -27,3 +27,13 @@
         (list 'a (list 1) false))
 (equal? (cons (cons 1 (cons 2 empty)) (cons (cons 2 (cons 3 empty)) empty))
         (list (list 1 2) (list 2 3)))
+
+;; Exercise 13.0.5
+(equal? (cons 'a (list 0 false))
+        (cons 'a (cons 0 (cons false empty))))
+(equal? (list (cons 1 (cons 13 empty)))
+        (cons (cons 1 (cons 13 empty)) empty))
+(equal? (list empty empty (cons 1 empty))
+        (cons empty (cons empty (cons (cons 1 empty) empty))))
+(equal? (cons 'a (cons (list 1) (list false empty)))
+        (cons 'a (cons (cons 1 empty) (cons false (cons empty empty)))))
