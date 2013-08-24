@@ -36,3 +36,24 @@
 (equal? 1 (count-persons Fred))
 (equal? 3 (count-persons Adam))
 (equal? 5 (count-persons Gustav))
+
+;; Exercise 14.1.4
+(define (add-all-ages node current-year)
+  (cond
+    [(empty? node) 0]
+    [else (+ (add-all-ages (child-father node) current-year)
+             (add-all-ages (child-mother node) current-year)
+             (- current-year (child-date node)))]))
+
+;; Doesn't handle empty node!
+(define (average-age node current-year)
+  (/ (add-all-ages node current-year)
+     (count-persons node)))
+
+(equal? 75 (average-age Carl 2001))
+(equal? 75 (average-age Bettina 2001))
+(equal? 67 (average-age Adam 2001))
+(equal? (+ 65 1/3) (average-age Dave 2001))
+(equal? 62 (average-age Eva 2001))
+(equal? 35 (average-age Fred 2001))
+(equal? (+ 46 4/5) (average-age Gustav 2001))
