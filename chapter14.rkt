@@ -11,7 +11,7 @@
 (define Fred (make-child empty empty 'Fred 1966 'pink))
 
 ;; youngest generation
-(define Gustav (make-child Eva Fred 'Gustav 1988 'brown))
+(define Gustav (make-child Fred Eva 'Gustav 1988 'brown))
 
 (define (blue-eyed-ancestor? child)
   (cond
@@ -57,3 +57,20 @@
 (equal? 62 (average-age Eva 2001))
 (equal? 35 (average-age Fred 2001))
 (equal? (+ 46 4/5) (average-age Gustav 2001))
+
+;; Exercise 14.1.5
+(define (eye-colors node)
+  (cond
+    [(empty? node) empty]
+    [else (cons (child-eyes node)
+                (append (eye-colors (child-father node))
+                        (eye-colors (child-mother node))))]))
+
+(equal? empty (eye-colors empty))
+(equal? (list 'green) (eye-colors Carl ))
+(equal? (list 'green) (eye-colors Bettina ))
+(equal? (list 'yellow 'green 'green) (eye-colors Adam ))
+(equal? (list 'black 'green 'green) (eye-colors Dave ))
+(equal? (list 'blue 'green 'green) (eye-colors Eva ))
+(equal? (list 'pink) (eye-colors Fred ))
+(equal? (list 'brown 'pink 'blue 'green 'green) (eye-colors Gustav ))
