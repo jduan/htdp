@@ -45,3 +45,34 @@
         (list 30 200 1/2))
 (equal? (list 'dana 'jane 'mary 'laura)
         (cons 'dana (cons 'jane (cons 'mary (cons 'laura empty)))))
+
+;; Exercise 13.0.7
+(equal? (first (list 1 2 3))
+        1)
+(equal? (rest (list 1 2 3))
+        (list 2 3))
+
+;; Exercise 13.0.8
+(equal? '(1 a 2 b 3 c)
+        (list 1 'a 2 'b 3 'c))
+(equal? '((alan 1000)
+            (barb 2000)
+            (carl 1500)
+            (dawn 2300))
+        (list (list 'alan 1000)
+              (list 'barb 2000)
+              (list 'carl 1500)
+              (list 'dawn 2300)))
+(equal? '((My First Paper)
+            (Sean Fisler)
+            (Section 1
+                     (Subsection 1 Life is difficult)
+                     (Subsection 2 But learning things makes it interesting))
+            (Section 2
+                     Conclusion? What conclusion?))
+        (list (list 'My 'First 'Paper)
+              (list 'Sean 'Fisler)
+              (list 'Section 1
+                    (list 'Subsection 1 'Life 'is 'difficult)
+                    (list 'Subsection 2 'But 'learning 'things 'makes 'it 'interesting))
+              (list 'Section 2 'Conclusion? 'What 'conclusion?)))
