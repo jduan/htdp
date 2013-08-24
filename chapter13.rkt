@@ -37,3 +37,11 @@
         (cons empty (cons empty (cons (cons 1 empty) empty))))
 (equal? (cons 'a (cons (list 1) (list false empty)))
         (cons 'a (cons (cons 1 empty) (cons false (cons empty empty)))))
+
+;; Exercise 13.0.6
+(equal? (list (symbol=? 'a 'b) (symbol=? 'c 'c) false)
+        (list false true false))
+(equal? (list (+ 10 20) (* 10 20) (/ 10 20))
+        (list 30 200 1/2))
+(equal? (list 'dana 'jane 'mary 'laura)
+        (cons 'dana (cons 'jane (cons 'mary (cons 'laura empty)))))
