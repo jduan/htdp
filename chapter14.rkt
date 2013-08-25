@@ -145,3 +145,26 @@
              (search-bst ssn (node-left tree))]
             [else
              (search-bst ssn (node-right tree))])]))
+
+;; Exercise 14.2.5
+(define (create-bst tree ssn name)
+  (cond
+    [(boolean? tree) (make-node ssn name false false)]
+    [else (cond
+            [(< ssn (node-ssn tree))
+             (make-node (node-ssn tree) (node-name tree)
+                        (create-bst (node-left tree) ssn name)
+                        (node-right tree))]
+            [(> ssn (node-ssn tree))
+             (make-node (node-ssn tree) (node-name tree)
+                        (node-left tree)
+                        (create-bst (node-right tree) ssn name))]
+            [else (error 'create-bst "Number already in BST")])]))
+
+;; Exercise 14.2.6
+(define (create-bst-from-list lonn)
+  (cond
+    [(empty? lonn) (create-bst false)]
+    [else (create-bst (create-bst-from-list (rest lonn))
+                      (first (first lonn))
+                      (second (first lonn)))]))
