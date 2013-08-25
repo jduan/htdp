@@ -48,3 +48,30 @@
 (equal? 1 (how-far-removed Bettina))
 (equal? 1 (how-far-removed Carl))
 
+;; Exercise 15.1.3
+(define (count-descendants-children children)
+  (cond
+    [(empty? children) 0]
+    [else (+ (count-descendants (first children))
+             (count-descendants-children (rest children)))]))
+(define (count-descendants parent)
+  (+ 1 (count-descendants-children (parent-children parent))))
+
+(equal? 1 (count-descendants Gustav))
+(equal? 2 (count-descendants Fred))
+(equal? 2 (count-descendants Eva))
+(equal? 1 (count-descendants Dave))
+(equal? 1 (count-descendants Adam))
+(equal? 5 (count-descendants Bettina))
+(equal? 5 (count-descendants Carl))
+
+(define (count-proper-descendants parent)
+  (count-descendants-children (parent-children parent)))
+
+(equal? 0 (count-proper-descendants Gustav))
+(equal? 1 (count-proper-descendants Fred))
+(equal? 1 (count-proper-descendants Eva))
+(equal? 0 (count-proper-descendants Dave))
+(equal? 0 (count-proper-descendants Adam))
+(equal? 4 (count-proper-descendants Bettina))
+(equal? 4 (count-proper-descendants Carl))
