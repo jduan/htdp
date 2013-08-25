@@ -242,3 +242,31 @@
 (equal? (depth '(())) 1)
 (equal? (depth '(a b c)) 0)
 (equal? (depth '(a (b (c (d))) e (f (g)) h)) 3)
+
+;; Exercise 14.4.1
+;; (make-add 10 -10)
+;; (make-add (make-mul 20 3) 33)
+;; (make-mul 3.14 (make-mul 'r 'r))
+;; (make-add (make-mul 9/5 'c) 32)
+;; (make-add (make-mul 3.14 (make-mul 'o 'o))
+;;           (make-mul 3.14 (make-mul 'i 'i)))
+;;
+
+;; Exercise 14.4.2
+(define-struct add (lhs rhs))
+(define-struct mul (lhs rhs))
+
+(define (numeric? exp)
+  (cond
+    [(number? exp) true]
+    [(symbol? exp) false]
+    [(add? exp) (and (numeric? (add-lhs exp))
+                     (numeric? (add-rhs exp)))]
+    [(mul? exp) (and (numeric? (mul-lhs exp))
+                     (numeric? (mul-rhs exp)))]))
+
+(equal? true (numeric? (make-add 10 -10)))
+(equal? true (numeric? (make-add (make-mul 20 3) 33)))
+(equal? false (numeric? (make-add
+                          (make-mul 3.14 (make-mul 'o 'o))
+                          (make-mul 3.14 (make-mul 'i 'i)))))
