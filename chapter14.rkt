@@ -211,3 +211,34 @@
 (= (occurs2 empty 'a) 0)
 (= (occurs2 '(a b a) 'a) 2)
 (= (occurs2 '((a b c) b (a a a) a) 'a) 5)
+
+;; Exercise 14.3.3
+(define (replace new old wp)
+  (cond
+    [(empty? wp) empty]
+    [(symbol? (first wp))
+     (cond
+       [(symbol=? (first wp) old) (cons new (replace new old (rest wp)))]
+       [else (cons (first wp) (replace new old (rest wp)))])]
+    [else (cons (replace new old (first wp))
+                (replace new old (rest wp)))]))
+
+(equal? (replace 'new 'old empty) empty)
+(equal? (replace 'new 'old '(other)) (list 'other))
+(equal? (replace 'new 'old '(old)) (list 'new))
+(equal? (replace 'new 'old '((new old other) other old old))
+        (list (list 'new 'new 'other) 'other 'new 'new))
+
+;; Exercise 14.3.4
+(define (depth wp)
+  (cond
+    [(empty? wp) 0]
+    [(symbol? (first wp)) (depth (rest wp))]
+    [else (max (+ 1 (depth (first wp)))
+               (depth (rest wp)))]))
+
+(equal? (depth '()) 0)
+(equal? (depth '(a)) 0)
+(equal? (depth '(())) 1)
+(equal? (depth '(a b c)) 0)
+(equal? (depth '(a (b (c (d))) e (f (g)) h)) 3)
