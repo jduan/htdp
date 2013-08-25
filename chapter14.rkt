@@ -74,3 +74,28 @@
 (equal? (list 'blue 'green 'green) (eye-colors Eva ))
 (equal? (list 'pink) (eye-colors Fred ))
 (equal? (list 'brown 'pink 'blue 'green 'green) (eye-colors Gustav ))
+
+;; Exercise 14.1.6
+(define (parent-blue-eyed? child)
+  (or
+    (and (not (empty? (child-father child))) (symbol=? 'blue (child-eyes (child-father child))))
+    (and (not (empty? (child-mother child))) (symbol=? 'blue (child-eyes (child-mother child))))))
+
+(equal? true (parent-blue-eyed? Gustav))
+
+(define (proper-blue-eyed-ancestor? child)
+  (cond
+    [(empty? child) false]
+    [else (or (parent-blue-eyed? child)
+              (proper-blue-eyed-ancestor? (child-father child))
+              (proper-blue-eyed-ancestor? (child-mother child)))]))
+
+;; solution 2
+(define (proper-blue-eyed-ancestor? child)
+  (and
+    (blue-eyed-ancestor? child)
+    (not (symbol=? 'blue (child-eyes child)))))
+
+(equal? true (proper-blue-eyed-ancestor? Gustav))
+(equal? false (proper-blue-eyed-ancestor? Eva))
+(equal? false (proper-blue-eyed-ancestor? Carl))
