@@ -168,3 +168,46 @@
     [else (create-bst (create-bst-from-list (rest lonn))
                       (first (first lonn))
                       (second (first lonn)))]))
+
+(define (size a-wp)
+  (cond
+    [(empty? a-wp) 0]
+    [(symbol? (first a-wp)) (+ 1 (size (rest a-wp)))]
+    [(list? (first a-wp)) (+ (size (first a-wp))
+                             (size (rest a-wp)))]))
+
+(equal? 29
+        (size '(The TeachScheme Web Page
+                    Here you can find:
+                    (LectureNotes for Teachers)
+                    (Guidance for (DrScheme: a Scheme programming environment))
+                    (Exercise Sets)
+                    (Solutions for Exercises)
+                    For further information: write to scheme@cs)))
+
+;; Exercise 14.3.2
+(define (occurs1 a-wp word)
+  (cond
+    [(empty? a-wp) 0]
+    [(and (symbol? (first a-wp))
+          (symbol=? word (first a-wp)))
+     (+ 1 (occurs1 (rest a-wp) word))]
+    [else (occurs1 (rest a-wp) word)]))
+
+(= (occurs1 empty 'a) 0)
+(= (occurs1 '(a b a) 'a) 2)
+(= (occurs1 '((a b c) b (a a a) a) 'a) 1)
+
+(define (occurs2 a-wp word)
+  (cond
+    [(empty? a-wp) 0]
+    [(symbol? (first a-wp))
+     (cond
+       [(symbol=? word (first a-wp)) (+ 1 (occurs2 (rest a-wp) word))]
+       [else (occurs2 (rest a-wp) word)])]
+    [else (+ (occurs2 (first a-wp) word)
+             (occurs2 (rest a-wp) word))]))
+
+(= (occurs2 empty 'a) 0)
+(= (occurs2 '(a b a) 'a) 2)
+(= (occurs2 '((a b c) b (a a a) a) 'a) 5)
