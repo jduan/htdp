@@ -75,3 +75,16 @@
 (equal? 0 (count-proper-descendants Adam))
 (equal? 4 (count-proper-descendants Bettina))
 (equal? 4 (count-proper-descendants Carl))
+
+;; Exercise 15.1.4
+(define (eye-colors-children children)
+  (cond
+    [(empty? children) empty]
+    [else (append (eye-colors (first children))
+                  (eye-colors-children (rest children)))]))
+(define (eye-colors parent)
+  (cons (parent-eyes parent) (eye-colors-children (parent-children parent))))
+
+(equal? '(green yellow black blue brown) (eye-colors Carl))
+(equal? '(green yellow black blue brown) (eye-colors Bettina))
+(equal? '(blue brown) (eye-colors Eva))
