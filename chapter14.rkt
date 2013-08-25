@@ -270,3 +270,16 @@
 (equal? false (numeric? (make-add
                           (make-mul 3.14 (make-mul 'o 'o))
                           (make-mul 3.14 (make-mul 'i 'i)))))
+
+;; Exercise 14.4.3
+(define (evaluate-expression exp)
+  (cond
+    [(number? exp) exp]
+    [(symbol? exp) (error 'evaluate-expression "got a variable")]
+    [(add? exp) (+ (evaluate-expression (add-lhs exp))
+                     (evaluate-expression (add-rhs exp)))]
+    [(mul? exp) (* (evaluate-expression (mul-lhs exp))
+                     (evaluate-expression (mul-rhs exp)))]))
+
+(equal? 24 (evaluate-expression (make-add (make-add 5 7) (make-mul 4 3))))
+(equal? 8 (evaluate-expression (make-mul 4 2)))
