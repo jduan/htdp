@@ -29,16 +29,14 @@
 
 ;; Exercise 15.1.2
 (define (how-far-removed-children children)
-  (cond
-    [(empty? children) 0]
-    [(not (boolean? (how-far-removed (first children))))
-     (+ 1 (min (how-far-removed (first children))
-               (how-far-removed-children (rest children))))]
-    [else (how-far-removed-children (rest children))]))
+  (let* [(how-far (map how-far-removed children))
+         (filtered (filter number? how-far))]
+    (cond
+      [(empty? filtered) false]
+      [else (+ 1 (apply min filtered))])))
 
 (define (how-far-removed parent)
   (cond
-    [(not (blue-eyed-descendant? parent)) false]
     [(symbol=? 'blue (parent-eyes parent)) 0]
     [else (how-far-removed-children (parent-children parent))]))
 
