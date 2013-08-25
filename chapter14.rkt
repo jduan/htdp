@@ -113,3 +113,12 @@
               (contains-bt ssn (node-left tree))
               (contains-bt ssn (node-right tree)))]))
 
+;; Exercise 14.2.2
+(define (search-bt ssn tree)
+  (cond
+    [(false? tree) false]
+    [else (cond
+            [(= ssn (node-ssn tree)) (node-name tree)]
+            [else (or
+                    (search-bt ssn (node-left tree))
+                    (search-bt ssn (node-right tree)))])]))
