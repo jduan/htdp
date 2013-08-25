@@ -283,3 +283,20 @@
 
 (equal? 24 (evaluate-expression (make-add (make-add 5 7) (make-mul 4 3))))
 (equal? 8 (evaluate-expression (make-mul 4 2)))
+
+;; Exercise 14.4.4
+(define (subst V N exp)
+  (cond
+    [(number? exp) exp]
+    [(symbol? exp)
+     (cond
+       [(symbol=? exp V) N]
+       [else exp])]
+    [(add? exp) (make-add (subst V N (add-lhs exp))
+                          (subst V N (add-rhs exp)))]
+    [(mul? exp) (make-mul (subst V N (mul-lhs exp))
+                          (subst V N (mul-rhs exp)))]))
+
+(equal? (subst 'x 2 1) 1)
+(equal? (subst 'x 2 'x) 2)
+(equal? (subst 'y 2 'x) 'x)
