@@ -99,3 +99,17 @@
 (equal? true (proper-blue-eyed-ancestor? Gustav))
 (equal? false (proper-blue-eyed-ancestor? Eva))
 (equal? false (proper-blue-eyed-ancestor? Carl))
+
+
+;; section 14.2
+
+(define-struct node (ssn name left right))
+
+;; Exercise 14.2.1
+(define (contains-bt ssn tree)
+  (cond
+    [(false? tree) false]
+    [else (or (= ssn (node-ssn tree))
+              (contains-bt ssn (node-left tree))
+              (contains-bt ssn (node-right tree)))]))
+
