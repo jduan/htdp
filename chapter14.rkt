@@ -134,3 +134,14 @@
 (inorder (make-node 66 'a
                     (make-node 53 'b false false)
                     (make-node 78 'c false false)))
+
+;; Exercise 14.2.4
+(define (search-bst ssn tree)
+  (cond
+    [(boolean? tree) false]
+    [else (cond
+            [(= ssn (node-ssn tree)) (node-name tree)]
+            [(< ssn (node-ssn tree))
+             (search-bst ssn (node-left tree))]
+            [else
+             (search-bst ssn (node-right tree))])]))
