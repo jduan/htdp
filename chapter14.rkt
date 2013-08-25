@@ -122,3 +122,15 @@
             [else (or
                     (search-bt ssn (node-left tree))
                     (search-bt ssn (node-right tree)))])]))
+
+;; Exercise 14.2.3
+(define (inorder tree)
+  (cond
+    [(boolean? tree) empty]
+    [else (append
+            (inorder (node-left tree))
+            (cons (node-ssn tree) (inorder (node-right tree))))]))
+
+(inorder (make-node 66 'a
+                    (make-node 53 'b false false)
+                    (make-node 78 'c false false)))
