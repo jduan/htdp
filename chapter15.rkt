@@ -88,3 +88,32 @@
 (equal? '(green yellow black blue brown) (eye-colors Carl))
 (equal? '(green yellow black blue brown) (eye-colors Bettina))
 (equal? '(blue brown) (eye-colors Eva))
+
+;; Exercise 15.3.1
+(define-struct wp (header body))
+
+(define (size-document document)
+  (cond
+    [(empty? document) 0]
+    [(symbol? (first document)) (+ 1 (size-document (rest document)))]
+    [(wp? (first document)) (+ (size-wp (first document))
+                               (size-document (rest document)))]))
+(define (size-wp wp)
+  (size-document (wp-body wp)))
+
+(define dogs-wp
+  (make-wp 'dogs-wp
+           (list 'my 'dogs 'web 'page)))
+
+(define cats-wp
+  (make-wp 'cats-wp
+           (list 'my 'cats 'web 'page)))
+
+(define my-wp
+  (make-wp 'my-wp
+           (list 'see 'my 'dog dogs-wp
+                 'see 'my 'cat cats-wp)))
+
+(equal? 4 (size-wp dogs-wp))
+(equal? 4 (size-wp cats-wp))
+(equal? 6 (size-wp my-wp))
