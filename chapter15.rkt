@@ -117,3 +117,18 @@
 (equal? 4 (size-wp dogs-wp))
 (equal? 4 (size-wp cats-wp))
 (equal? 6 (size-wp my-wp))
+
+;; Exercise 15.3.3
+(define (occurs sym wp)
+  (or (symbol=? sym (wp-header wp))
+      (occurs-body sym (wp-body wp))))
+
+(define (occurs-body sym document)
+  (cond
+    [(empty? document) false]
+    [(symbol? (first document))
+     (or (symbol=? (first document) sym)
+         (occurs-body (rest document) sym))]
+    [else
+     (or (occurs sym (first document))
+         (occurs-body sym (rest document)))]))
