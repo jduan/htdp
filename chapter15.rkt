@@ -132,3 +132,39 @@
     [else
      (or (occurs sym (first document))
          (occurs-body sym (rest document)))]))
+
+;; Exercise 15.3.4
+(define (find-wrapper wp sym)
+  (find wp sym empty))
+
+(define (find wp sym path)
+  (find-document (wp-body wp) (wp-header wp) sym path))
+
+(define (find-document document header sym path)
+  (cond
+    [(empty? document) false]
+    [(symbol? (first document))
+     (cond
+       [(symbol=? (first document) sym) (append path (list header))]
+       [else (find-document (rest document) header sym path)])]
+    [else (or (find (first document) sym (append path (list header)))
+              (find-document (rest document) header sym path))]))
+
+;; data examples:
+(define empty-page (make-wp 'empty-page empty))
+(define page-1-word (make-wp 'page-1-word (cons 'w1 empty)))
+(define page-2-words (make-wp 'page-2-words (list 'w1 'w2)))
+(define with-1-word-subpage (make-wp 'page-1-word-with-subpage (cons page-1-word empty)))
+(define with-2-words-subpage (make-wp 'with-2-words-subpage (cons page-2-words empty)))
+(define dense-page1 (make-wp 'realistic (list 'w3  page-2-words 'w4 page-1-word 'w5)))
+(define dense-page2 (make-wp 'realistic (list 'w3  empty-page 'w4 with-1-word-subpage 'w5)))
+
+(equal? (find-wrapper empty-page 'w1) false)
+(equal? (find-wrapper page-1-word 'w1) (list 'page-1-word))
+(equal? (find-wrapper page-2-words 'w3) false)
+(equal? (find-wrapper with-2-words-subpage 'w2) (list 'with-2-words-subpage 'page-2-words))
+(equal? (find-wrapper dense-page1 'no-in-there) false)
+(equal? (find-wrapper dense-page1 'w1) (list 'realistic 'page-2-words))
+(equal? (find-wrapper dense-page1 'w2) (list 'realistic 'page-2-words))
+(equal? (find-wrapper dense-page2 'w1) (list 'realistic 'page-1-word-with-subpage 'page-1-word))
+(equal? (find-wrapper dense-page1 'w5) (list 'realistic))
