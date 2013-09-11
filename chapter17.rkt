@@ -84,3 +84,25 @@
      (cons (make-phone-record (first names) (first numbers))
            (zip (rest names) (rest numbers)))]))
 
+;; list-pick : list-of-symbols N[>= 1]  ->  symbol
+;; to determine the nth symbol from alos, counting from 1;
+;; signals an error if there is no nth item
+(define (list-pick los nth)
+  (cond
+    [(empty? los) (error 'list-pick "no such element")]
+    [(= nth 1) (first los)]
+    [else (list-pick (rest los) (sub1 nth))]))
+
+(equal? (list-pick '(hello world you are great) 3) 'you)
+
+;; Exercise 17.3.1
+;;  Develop list-pick0, which picks items from a list like list-pick but starts
+;;  counting at 0.
+(define (list-pick0 los nth)
+  (cond
+    [(empty? los) (error 'list-pick0 "no such element")]
+    [(= nth 0) (first los)]
+    [else (list-pick0 (rest los) (sub1 nth))]))
+
+(equal? (list-pick0 '(hello world you are great) 3) 'are)
+(equal? (list-pick0 '(hello world you are great) 0) 'hello)
