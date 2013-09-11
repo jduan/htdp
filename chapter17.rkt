@@ -74,3 +74,13 @@
         (make-work 'qingqing' 30)))
 (equal? (hours->wages2 list-of-employees list-of-work)
         (list 4000 3600))
+
+;; Exercise 17.2.2
+(define-struct phone-record (name number))
+(define (zip names numbers)
+  (cond
+    [(empty? names) empty]
+    [else
+     (cons (make-phone-record (first names) (first numbers))
+           (zip (rest names) (rest numbers)))]))
+
