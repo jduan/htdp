@@ -106,3 +106,20 @@
 
 (equal? (list-pick0 '(hello world you are great) 3) 'are)
 (equal? (list-pick0 '(hello world you are great) 0) 'hello)
+
+;; Exercise 17.6.1
+;; Develop the function merge. It consumes two lists of numbers, sorted in
+;; ascending order. It produces a single sorted list of numbers that contains
+;; all the numbers on both inputs lists (and nothing else).
+(define (merge lst1 lst2)
+  (cond
+    [(empty? lst1) lst2]
+    [(empty? lst2) lst1]
+    [else (cond
+            [(<= (first lst1) (first lst2)) (cons (first lst1) (merge (rest lst1) lst2))]
+            [else (cons (first lst2) (merge lst1 (rest lst2)))])]))
+
+(equal? (merge (list 1 3 5 7 9) (list 2 4 6 8 10))
+        (list 1 2 3 4 5 6 7 8 9 10))
+(equal? (merge (list 1 8 8 11 12) (list 2 3 4 8 13 14))
+        (list 1 2 3 4 8 8 8 11 12 13 14))
