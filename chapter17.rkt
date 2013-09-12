@@ -193,3 +193,13 @@
 
 (define wages (hours->wages3 employees cards))
 (equal? wages '((1 3600) (2 3000) (3 6000)))
+
+;; Exercise 17.6.4
+(define (value coefficients numbers)
+  (cond
+    [(empty? coefficients) 0]
+    [(+ (* (first coefficients) (first numbers))
+        (value (rest coefficients) (rest numbers)))]))
+
+(equal? (value '(5 17 3) '(10 1 2)) 73)
+(equal? (value '(5 17) '(10 1)) 67)
