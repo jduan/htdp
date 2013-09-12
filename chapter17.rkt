@@ -123,3 +123,73 @@
         (list 1 2 3 4 5 6 7 8 9 10))
 (equal? (merge (list 1 8 8 11 12) (list 2 3 4 8 13 14))
         (list 1 2 3 4 8 8 8 11 12 13 14))
+
+;; Exercise 17.6.3
+(define-struct punch-card (employee-id hours))
+(define-struct employee (name id pay-rate))
+
+;; Insert a number into a list of sorted numbers
+;; sort-f is a sort function
+(define (insert-to-sorted-list n alon sort-f)
+  (if (empty? alon)
+    (cons n empty)
+    (if (sort-f n (first alon))
+      (cons n alon)
+      (cons (first alon) (insert-to-sorted-list n (rest alon) sort-f)))))
+
+;; Sort a list of numbers in ascending order
+(define (mysort alon sort-f)
+  (if (empty? alon)
+    empty
+    (insert-to-sorted-list
+      (first alon)
+      (mysort (rest alon) sort-f)
+      sort-f)))
+
+;; Sort employees
+(define (sort-employees aloe)
+  (mysort aloe (lambda (e1 e2) (< (employee-id e1) (employee-id e2)))))
+
+(define employees (list (make-employee 'jingjing 2 100)
+                        (make-employee 'jessica 3 120)
+                        (make-employee 'jake 4 140)
+                        (make-employee 'qingqing 1 90)))
+
+(define employees-sorted (sort-employees employees))
+(equal? (employee-name (first employees-sorted)) 'qingqing)
+(equal? (employee-name (second employees-sorted)) 'jingjing)
+
+;; Sort punch cards
+(define (sort-punch-cards cards)
+  (mysort cards (lambda (c1 c2) (< (punch-card-employee-id c1)
+                                   (punch-card-employee-id c2)))))
+
+(define cards (list (make-punch-card 1 40)
+                    (make-punch-card 3 50)
+                    (make-punch-card 2 30)))
+
+(define cards-sorted (sort-punch-cards cards))
+
+(equal? (punch-card-employee-id (first cards-sorted)) 1)
+(equal? (punch-card-employee-id (second cards-sorted)) 2)
+
+;; calculate wages for a list of employees and their punch cards
+(define (hours->wages3 employees cards)
+  (hours->wages4 (sort-employees employees) (sort-punch-cards cards)))
+
+;; calculate wages for a list of employees and their punch cards
+;; both lists are sorted based on employee ids
+(define (hours->wages4 employees cards)
+  (cond
+    [(empty? cards) empty]
+    [(empty? employees) (error 'hours->wages4 "punch cards don't corresponding employees")]
+    [(< (punch-card-employee-id (first cards)) (employee-id (first employees)))
+     (error 'hours->wages4 "punch card is for an non-existing employee")]
+    [(= (punch-card-employee-id (first cards)) (employee-id (first employees)))
+     (cons (list (employee-id (first employees)) (* (employee-pay-rate (first employees))
+                                                    (punch-card-hours (first cards))))
+           (hours->wages4 (rest employees) (rest cards)))]
+    [else (hours->wages4 (rest employees) cards)]))
+
+(define wages (hours->wages3 employees cards))
+(equal? wages '((1 3600) (2 3000) (3 6000)))
