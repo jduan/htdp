@@ -203,3 +203,96 @@
 
 (equal? (value '(5 17 3) '(10 1 2)) 73)
 (equal? (value '(5 17) '(10 1)) 67)
+
+
+;; Exercise 17.6.5
+
+;; Given a list of names, return all permutations of the names
+(define (arrangements a-word)
+  (cond
+    [(empty? a-word) (list empty)]
+    [else (add-letter-to-list-of-words (first a-word)
+                                       (arrangements (rest a-word)))]))
+;; add a letter to a list of words
+(define (add-letter-to-list-of-words letter low)
+  (cond
+    [(empty? low) empty]
+    [else (append (add-letter-to-word letter (first low))
+                  (add-letter-to-list-of-words letter (rest low)))]))
+;; add a letter to a word at different locations
+(define (add-letter-to-word letter word)
+  (cond
+    [(empty? word) (list (list letter))]
+    [else (cons (cons letter word)
+                (add-at-beginning (first word)
+                                  (add-letter-to-word letter (rest word))))]))
+
+;; add a letter to the beginning of every word in a list of words
+(define (add-at-beginning letter words)
+  (cond
+    [(empty? words) empty]
+    [else (cons (cons letter (first words))
+                (add-at-beginning letter (rest words)))]))
+
+(equal? (arrangements '(Louise Jane Laura))
+        '((Louise Jane Laura)
+            (Jane Louise Laura)
+            (Jane Laura Louise)
+            (Louise Laura Jane)
+            (Laura Louise Jane)
+            (Laura Jane Louise)))
+
+;; non-same : list-of-names list-of-list-of-names  ->  list-of-list-of-names,
+;; which consumes a list of names L and a list of arrangements and produces the
+;; list of those that do not agree with L at any position.
+(define (non-same list-of-names list-of-list-of-names)
+  (cond
+    [(empty? list-of-list-of-names) empty]
+    [(dont-agree list-of-names (first list-of-list-of-names))
+     (cons (first list-of-list-of-names) (non-same list-of-names (rest list-of-list-of-names)))]
+    [else (non-same list-of-names (rest list-of-list-of-names))]))
+
+;; dont-agree: list-of-names1 list-of-names2 -> boolean
+;; check if two lists of names don't agree with each other at any position
+(define (dont-agree list-of-names1 list-of-names2)
+  (cond
+    [(empty? list-of-names1) true]
+    [(symbol=? (first list-of-names1) (first list-of-names2)) false]
+    [else (dont-agree (rest list-of-names1) (rest list-of-names2))]))
+
+(equal? (non-same
+          (list 'Carol 'Mary 'John)
+          (list (list 'Mary 'John 'Carol)
+                (list 'Mary 'Carol 'John)
+                (list 'John 'Carol 'Mary)
+                (list 'John 'Mary 'Carol)
+                (list 'Carol 'John 'Mary)
+                (list 'Carol 'Mary 'John)))
+        '((Mary John Carol) (John Carol Mary)))
+
+;; random-pick : list-of-list-of-names  ->  list-of-names, which consumes a list
+;; of items and randomly picks one of them as the result;
+(define (random-pick list-of-list-of-names)
+  (pick-nth list-of-list-of-names (random (length list-of-list-of-names))))
+
+(define (pick-nth lst n)
+  (if (zero? n)
+    (first lst)
+    (pick-nth (rest lst) (sub1 n))))
+
+(random-pick (list (list 'John 'Carol 'Ron 'Mary)
+                   (list 'Mary 'Carol 'Ron 'John)
+                   (list 'Mary 'Ron 'Carol 'John)
+                   (list 'Mary 'John 'Ron 'Carol)
+                   (list 'John 'Ron 'Carol 'Mary)
+                   (list 'Ron 'John 'Carol 'Mary)
+                   (list 'Ron 'Carol 'Mary 'John)
+                   (list 'John 'Ron 'Mary 'Carol)
+                   (list 'John 'Ron 'Carol 'Mary)
+                   (list 'Ron 'John 'Mary 'Carol)))
+
+(define (gift-pick names)
+  (random-pick
+    (non-same names (arrangements names))))
+
+(gift-pick '(John Carol Ron Mary))
