@@ -296,3 +296,48 @@
     (non-same names (arrangements names))))
 
 (gift-pick '(John Carol Ron Mary))
+
+;; Exercise 17.6.6
+;; The function takes two arguments, both lists of symbols (only 'a,
+;; 'c, 'g, and 't occur in DNA, but we can safely ignore this issue here).
+;; The first list is called a pattern, the second one a search-string. The
+;; function returns true if the pattern is a prefix of the search-string.
+;; In all other cases, the function returns false.
+(define (DNAprefix pattern search-string)
+  (cond
+    [(empty? pattern) true]
+    [(empty? search-string) false]
+    [(symbol=? (first pattern) (first search-string))
+     (DNAprefix (rest pattern) (rest search-string))]
+    [else false]))
+
+(DNAprefix (list 'a 't) (list 'a 't 'c))
+(not (DNAprefix (list 'a 't) (list 'a)))
+(DNAprefix (list 'a 't) (list 'a 't))
+(not (DNAprefix (list 'a 'c 'g 't) (list 'a 'g)))
+(not (DNAprefix (list 'a 'a 'c 'c) (list 'a 'c)))
+
+;; Modify DNAprefix so that it returns the first item beyond the pattern in the
+;; search-string if the pattern is a proper prefix of the search-string. If the
+;; lists do not match or if the pattern is no shorter than the search-string,
+;; the modified function should still return false. Similarly, if the lists are
+;; equally long and match, the result is still true.
+(define (DNAprefix2 pattern search-string)
+  (cond
+    [(empty? pattern)
+     (cond
+       [(empty? search-string) true]
+       [else (first search-string)])]
+    [(empty? search-string) false]
+    [(symbol=? (first pattern) (first search-string))
+     (DNAprefix2 (rest pattern) (rest search-string))]
+    [else false]))
+
+(DNAprefix2 empty empty)
+(equal? (DNAprefix2 empty '(a t)) 'a)
+(equal? (DNAprefix2 (list 'a 't 'c) empty) false)
+(equal? (DNAprefix2 (list 'a 't) (list 'a 't)) true)
+(equal? (DNAprefix2 (list 'a 't) (list 'a 't 'c 'g)) 'c)
+(equal? (DNAprefix2 (list 'a 't 'c) (list 'a 't)) false)
+(equal? (DNAprefix2 (list 'a 'c) (list 'a 't)) false)
+(equal? (DNAprefix2 (list 'a) (list 'a 't 'c 'g)) 't)
