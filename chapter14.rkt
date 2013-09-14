@@ -379,3 +379,50 @@
 (equal? (list-equal? (list 1 false 'a) (list 1 false 'a)) true)
 (equal? (list-equal? (list 1 false 'a) (list 'a 1 false)) false)
 (equal? (list-equal? (list 1 false 'a) (list 3 false 'a)) false)
+
+;; Determine if two web pages are the same
+(define (web=? web1 web2)
+  (cond
+    [(empty? web1) (empty? web2)]
+    [(symbol? (first web1))
+     (and (cons? web2)
+          (symbol? (first web2))
+          (symbol=? (first web1) (first web2))
+          (web=? (rest web1) (rest web2)))]
+    [else (and (cons? web2)
+               (list? (first web2))
+               (web=? (first web1) (first web2))
+               (web=? (rest web1) (rest web2)))]))
+
+;combination 1
+(equal? (web=? empty empty) true)
+
+;combination 2
+(equal? (web=? (list 'Hello 'World) empty) false)
+
+;combination 3
+(equal? (web=? (list (list 'Goodbye)) empty) false)
+
+;combination 4
+(equal? (web=? empty (list 'Homework)) false)
+
+;combination 5
+(equal? (web=? (list 'Hello 'World) (list 'Homework)) false)
+
+;combination 5
+(equal? (web=? (list 'Homework) (list 'Homework)) true)
+
+;combination 6
+(equal? (web=? (list (list 'Goodbye)) (list 'Homework)) false)
+
+;combination 7
+(equal? (web=? empty (list (list 'Solutions))) false)
+
+;combination 8
+(equal? (web=? (list 'Hello 'World) (list (list 'Solutions))) false)
+
+;combination 9
+(equal? (web=? (list (list 'Solutions)) (list (list 'Solutions))) true)
+
+;combination 9
+(equal? (web=? (list (list 'Goodbye)) (list (list 'Solutions))) false)
