@@ -49,3 +49,6 @@
 (local ((define CONST 100)
           (define (f x) (+ x CONST)))
        (define (g x y z) (f (+ x (* y z)))))
+
+;; Exercise 18.1.4
+;; Impossible. Locals are locals.
