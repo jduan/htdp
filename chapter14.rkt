@@ -332,3 +332,24 @@
 (equal? (sym-list=? '(a b c) '(a b c)) true)
 (equal? (sym-list=? '(b c) '(a b c)) false)
 (equal? (sym-list=? '(a c b) '(a b c)) false)
+
+;; Exercise 17.8.4
+;; Develop contains-same-numbers. The function determines whether two lists of
+;; numbers contain the same numbers, regardless of the ordering.
+(define (contains-same-numbers nums1 nums2)
+  (list=? (remove-duplicates (sort nums1 <)) (remove-duplicates (sort nums2 <)) =))
+
+;; Remove duplicate numbers from a list of sorted numbers.
+(define (remove-duplicates nums)
+  (cond
+    [(empty? nums) empty]
+    [(> (length nums) 1)
+     (cond
+       [(= (first nums) (second nums)) (remove-duplicates (rest nums))]
+       [else (cons (first nums) (remove-duplicates (rest nums)))])]
+    [else nums]))
+
+(equal? (contains-same-numbers '(1 2 3) '(3 2 1)) true)
+(equal? (contains-same-numbers '(1 2 3 4) '(3 2 1)) false)
+(equal? (contains-same-numbers '(1 2 3 3 2 1) '(3 2 1)) true)
+(equal? (contains-same-numbers '(1 1 1 1) '(1)) true)
