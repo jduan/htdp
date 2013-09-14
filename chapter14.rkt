@@ -426,3 +426,22 @@
 
 ;combination 9
 (equal? (web=? (list (list 'Goodbye)) (list (list 'Solutions))) false)
+
+
+;; Exercise 17.8.7
+(define-struct posn (x y))
+
+(define (posn=? p1 p2)
+  (and (= (posn-x p1) (posn-x p2))
+       (= (posn-y p1) (posn-y p2))))
+
+;Examples as Tests:
+(equal?  (posn=? (make-posn 8 12) (make-posn 8 12)) true)
+
+(equal?  (posn=? (make-posn 7 12) (make-posn 8 12)) false)
+
+(equal?  (posn=? (make-posn 8 3) (make-posn 8 12)) false)
+
+(equal?  (posn=? (make-posn 8 3) (make-posn 3 8)) false)
+
+(equal?  (posn=? (make-posn 3 5) (make-posn 3 5)) true)
