@@ -300,3 +300,35 @@
 (equal? (subst 'x 2 1) 1)
 (equal? (subst 'x 2 'x) 2)
 (equal? (subst 'y 2 'x) 'x)
+
+;; 17.8
+;; Compare if two lists of numbers are the same.
+(define (list=? lst1 lst2 cmp)
+  (cond
+    [(and (empty? lst1) (empty? lst2)) true]
+    [(and (not (empty? lst1)) (not (empty? lst2)))
+     (and (cmp (first lst1) (first lst2))
+          (list=? (rest lst1) (rest lst2) cmp))]
+    [else false]))
+
+(define (num-list=? lst1 lst2)
+  (list=? lst1 lst2 =))
+
+(equal? (num-list=? empty empty) true)
+(equal? (num-list=? empty '(1)) false)
+(equal? (num-list=? '(1) empty) false)
+(equal? (num-list=? '(1 2 3) '(4 5 6)) false)
+(equal? (num-list=? '(1 2 3) '(1 2 3)) true)
+(equal? (num-list=? '(2 1 3) '(1 2 3)) false)
+
+;; Exercise 17.8.3
+;; Determine if two lists of symbols are the same.
+(define (sym-list=? lst1 lst2)
+  (list=? lst1 lst2 symbol=?))
+
+(equal? (sym-list=? empty empty) true)
+(equal? (sym-list=? empty '(a)) false)
+(equal? (sym-list=? '(a) empty) false)
+(equal? (sym-list=? '(a b c) '(a b c)) true)
+(equal? (sym-list=? '(b c) '(a b c)) false)
+(equal? (sym-list=? '(a c b) '(a b c)) false)
