@@ -445,3 +445,88 @@
 (equal?  (posn=? (make-posn 8 3) (make-posn 3 8)) false)
 
 (equal?  (posn=? (make-posn 3 5) (make-posn 3 5)) true)
+
+;; Exercise 17.8.8
+;; Determine if two binary trees are the same.
+;; A binary tree is either false or a structure:
+(define-struct node (value left right))
+(define (tree=? t1 t2)
+  (cond
+    [(false? t1) (false? t2)]
+    [else (and (node? t2)
+          (= (node-value t1) (node-value t2))
+          (tree=? (node-left t1) (node-left t2))
+          (tree=? (node-right t1) (node-right t2)))]))
+
+;Examples as Tests:
+(equal?
+ (tree=? false false)
+ true)
+
+(equal?
+ (tree=? (make-node 12
+                    false
+                    false)
+         (make-node 12
+                    false
+                    false))
+ true)
+
+(equal?
+ (tree=? false false)
+ true)
+
+(equal?
+ (tree=? (make-node 12
+                    false
+                    false)
+         (make-node 18
+                    false
+                    false))
+ false)
+
+(equal?
+ (tree=?
+  (make-node 12
+             (make-node 35
+                        false
+                        false)
+             (make-node 65
+                        (make-node 89
+                                   false
+                                   false)
+                        false))
+  (make-node 12
+             (make-node 35
+                        false
+                        false)
+             (make-node 65
+                        (make-node 89
+                                   false
+                                   false)
+                        false)))
+ true)
+
+(equal?
+ (tree=?
+  (make-node 12
+             (make-node 35
+                        false
+                        false)
+             (make-node 65
+                        (make-node 89
+                                   false
+                                   false)
+                        false))
+  (make-node 12
+             (make-node 35
+                        false
+                        false)
+             (make-node 65
+                        (make-node 89
+                                   (make-node 7
+                                              false
+                                              false)
+                                   false)
+                        false)))
+ false)
