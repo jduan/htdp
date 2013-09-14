@@ -52,3 +52,32 @@
 
 ;; Exercise 18.1.4
 ;; Impossible. Locals are locals.
+
+;; Exercise 18.1.5
+(equal? 30 (local ((define (x y) (* 3 y)))
+                  (* (x 2) 5)))
+
+(equal? -18 (local ((define (f c) (+ (* 9/5 c) 32)))
+                   (- (f 0) (f 10))))
+
+(equal? false (local [(define (odd? n)
+                        (cond
+                          [(zero? n) false]
+                          [else (even? (sub1 n))]))
+                      (define (even? n)
+                        (cond
+                          [(zero? n) true]
+                          [else (odd? (sub1 n))]))]
+                     (even? 1)))
+
+(equal? 588 (+ (local ((define (f x) (g (+ x 1) 22))
+                         (define (g x y) (+ x y)))
+                      (f 10))
+               555))
+
+(define (h n)
+  (cond
+    [(= n 0) empty]
+    [else (local ((define r (* n n)))
+                 (cons r (h (- n 1))))]))
+(equal? '(4 1) (h 2))
