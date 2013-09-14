@@ -16,3 +16,13 @@
             [else (odd (sub1 an))]))]
        (even 12))
 
+;; Exercise 18.1.2
+(local [(define (f x) (+ (* x x) (* 3 x) 15))
+        (define x 100)
+        (define f@100 (f x))]
+       f@100 x )
+
+(local ((define (f x) (+ (* x x) (* 3 x) 14))
+          (define x 100)
+          (define g (f x)))
+       g)
