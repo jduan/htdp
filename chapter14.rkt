@@ -530,3 +530,69 @@
                                    false)
                         false)))
  false)
+
+;; Exercise 17.8.9
+;; Determine if two s-lists are the same.
+(define (slist=? slist1 slist2)
+  (cond
+    [(empty? slist1) (empty? slist2)]
+    [else (and (cons? slist2)
+               (s-exp=? (first slist1) (first slist2))
+               (slist=? (rest slist1) (rest slist2)))]))
+
+;; Determine if two s-exps are the same.
+(define (s-exp=? exp1 exp2)
+  (cond
+    [(number? exp1) (and (number? exp2) (= exp1 exp2))]
+    [(boolean? exp1) (and (boolean? exp2) (boolean=? exp1 exp2))]
+    [(symbol? exp1) (and (symbol? exp2) (symbol=? exp1 exp2))]
+    [else (slist=? exp1 exp2)]))
+
+;Examples as Tests:
+(equal?
+ (slist=?
+  empty
+  empty)
+ true)
+
+(equal?
+ (slist=?
+  empty
+  (list 'w 6 6 false))
+ false)
+
+(equal?
+ (slist=?
+  (list 'w 6 6 false)
+  empty)
+ false)
+
+(equal?
+ (slist=?
+  (list 'w 6 6 false)
+  (list 'w 6 6 false))
+ true)
+
+(equal?
+ (slist=?
+  (list 'w 6 6 false)
+  (list 'w 6 false))
+ false)
+
+(equal?
+ (slist=?
+  (list 'w 6 6 false (list true 'a 7 'b))
+  (list 'w 6 6 false (list true 'a 7 'b)))
+ true)
+
+(equal?
+ (slist=?
+  (list 'w 6 6 false (list true 'a 7 'b))
+  (list 'w 6 (list true 'a 7 'b) 6 false ))
+ false)
+
+(equal?
+ (slist=?
+  (list 'w (list 5) 6 false)
+  (list 'w (list 5) 6 false))
+ true)
