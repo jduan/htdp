@@ -353,3 +353,29 @@
 (equal? (contains-same-numbers '(1 2 3 4) '(3 2 1)) false)
 (equal? (contains-same-numbers '(1 2 3 3 2 1) '(3 2 1)) true)
 (equal? (contains-same-numbers '(1 1 1 1) '(1)) true)
+
+;; Exercise 17.8.5
+;;  The class of numbers, symbols, and booleans are sometimes called atoms
+;;  Develop the function list-equal?, which consumes two lists of atoms and
+;;  determines whether they are equal.
+(define (list-equal? atoms1 atoms2)
+  (cond
+    [(empty? atoms1) (empty? atoms2)]
+    [else
+     (and (cons? atoms2)
+          (atom-equal? (first atoms1) (first atoms2))
+          (list-equal? (rest atoms1) (rest atoms2)))]))
+
+(define (atom-equal? atom1 atom2)
+  (cond
+    [(and (number? atom1) (number? atom2)) (= atom1 atom2)]
+    [(and (boolean? atom1) (boolean? atom2)) (boolean=? atom1 atom2)]
+    [(and (symbol? atom1) (symbol? atom2)) (symbol=? atom1 atom2)]
+    [else false]))
+
+(equal? (list-equal? empty empty) true)
+(equal? (list-equal? empty (list 1 false 'a)) false)
+(equal? (list-equal? (list 1 false 'a) empty) false)
+(equal? (list-equal? (list 1 false 'a) (list 1 false 'a)) true)
+(equal? (list-equal? (list 1 false 'a) (list 'a 1 false)) false)
+(equal? (list-equal? (list 1 false 'a) (list 3 false 'a)) false)
