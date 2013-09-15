@@ -25,3 +25,8 @@
 
 (equal? (a-function=? identity identity) true)
 (equal? (a-function=? sub1 identity) false)
+
+;; Exercise 20.2.2
+;; sort: (listof number) (number number -> boolean) -> (listof number)
+;; map: (number -> number) (listof number) -> (listof number)
+;; project: (listof (listof symbol)) (listof symbol -> symbol) -> (listof symbol)
