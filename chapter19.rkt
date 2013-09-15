@@ -81,3 +81,22 @@
 (equal? (maxi2 (list 3 7 6 2 9 8)) 9)
 (equal? (maxi2 (list 20 19 18 17 16 15 14 13 12 11 10 9 8 7 6 5 4 3 2 1)) 20)
 (equal? (maxi2 (list 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20)) 20)
+
+;; Exercise 19.1.6
+;; sort : list-of-numbers  ->  list-of-numbers
+;; to construct a list with all items from alon sorted by the op
+(define (sort alon op)
+  (local [(define (sort alon)
+            (cond
+              [(empty? alon) empty]
+              [else (insert (first alon) (sort (rest alon)))]))
+          (define (insert an alon)
+            (cond
+              [(empty? alon) (list an)]
+              [else (cond
+                      [(op an (first alon)) (cons an alon)]
+                      [else (cons (first alon) (insert an (rest alon)))])]))]
+         (sort alon)))
+
+(equal? (sort '(2 3 1 5 4) <) '(1 2 3 4 5))
+(equal? (sort '(2 3 1 5 4) >) '(5 4 3 2 1))
