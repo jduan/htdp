@@ -233,3 +233,16 @@
 (equal? false (to-blue-eyed-ancestor Bettina))
 (equal? false (to-blue-eyed-ancestor Carl))
 (equal? '(father mother) (to-blue-eyed-ancestor Hal))
+
+;; mult10 : list-of-digits  ->  list-of-numbers
+;; to create a list of numbers by multiplying each digit on alod
+;; by (expt 10 p) where p is the number of digits that follow
+(define (multi10 digits)
+  (local ((define (multi10-helper digits total)
+            (cond
+              [(empty? digits) total]
+              [else (multi10-helper (rest digits) (+ (first digits) (* 10 total)))])))
+         (multi10-helper digits 0)))
+
+(equal? 123 (multi10 '(1 2 3)))
+(equal? 32 (multi10 '(3 2)))
