@@ -112,3 +112,20 @@
 
 (sort inventory-records (lambda (r1 r2) (< (ir-price r1) (ir-price r2))))
 (sort inventory-records (lambda (r1 r2) (> (ir-price r1) (ir-price r2))))
+
+;; Exercise 19.2.3
+;; Develop the function lefts, which consumes a list of (pair X Y) and produces
+;; a corresponding list of X's
+(define-struct pair (left right))
+
+(define (lefts list-of-pairs)
+  (cond
+    [(empty? list-of-pairs) empty]
+    [else (cons (pair-left (first list-of-pairs)) (lefts (rest list-of-pairs)))]))
+
+(define list-of-pairs-of-numbers
+  (list (make-pair 1 2)
+        (make-pair 3 4)
+        (make-pair 5 6)
+        (make-pair 7 8)))
+(equal? (lefts list-of-pairs-of-numbers) '(1 3 5 7))
