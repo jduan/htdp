@@ -30,3 +30,21 @@
 ;; sort: (listof number) (number number -> boolean) -> (listof number)
 ;; map: (number -> number) (listof number) -> (listof number)
 ;; project: (listof (listof symbol)) (listof symbol -> symbol) -> (listof symbol)
+
+
+;; Exercise 20.2.3
+;; Use filter1 to develop a function that consumes a list of symbols and
+;; extracts all those that are not equal to 'car.
+(define (filter1 op lon t)
+  (cond
+    [(empty? lon) empty]
+    [(op (first lon) t) (cons (first lon) (filter1 op (rest lon) t))]
+    [else (filter1 op (rest lon) t)]))
+
+(define (find-all-not-car symbols)
+  (filter1 (lambda (sym1 sym2) (not (symbol=? sym1 sym2)))
+           symbols
+           'car))
+
+(equal? (find-all-not-car '(hello world car you rock))
+        '(hello world you rock))
