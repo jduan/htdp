@@ -129,3 +129,22 @@
         (make-pair 5 6)
         (make-pair 7 8)))
 (equal? (lefts list-of-pairs-of-numbers) '(1 3 5 7))
+
+;;A (non-empty-listof ITEM) is either
+
+;;    (cons s empty), or
+
+;;    (cons s l) where l is a (non-empty-listof ITEM)
+
+;;and s is always an ITEM.
+
+;;Develop the function last, which consumes a (non-empty-listof ITEM)
+;;and produces the last ITEM in that list.
+
+(define (last items)
+  (cond
+    [(empty? (rest items)) (first items)]
+    [else (last (rest items))]))
+
+(equal? (last '(1)) 1)
+(equal? (last '(1 2 3)) 3)
