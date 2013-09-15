@@ -145,3 +145,32 @@
 (equal? true (blue-eyed-descendant? Bettina))
 (equal? true (blue-eyed-descendant? Carl))
 
+
+;; A rock start has a name and use some instrument
+(define-struct star (name instrument))
+(define alos
+  (list (make-star 'Chris 'saxophone)
+        (make-star 'Robby 'trumpet)
+        (make-star 'Matt 'violin)
+        (make-star 'Wen 'guitar)
+        (make-star 'Matt 'radio)))
+;; last-occurrence : symbol list-of-star  ->  star or false
+;; to find the last star record in alostars that contains s in name field
+(define (last-occurrence s alostars)
+  (local [(define (find-all name stars)
+            (cond
+              [(empty? stars) empty]
+              [(symbol=? name (star-name (first stars)))
+               (cons (first stars) (find-all name (rest stars)))]
+              [else (find-all name (rest stars))]))
+          (define (last-occurrence name stars)
+            (local ((define selected (find-all name stars)))
+                   (if (empty? selected)
+                     false
+                     (star-instrument (last (find-all name stars))))))]
+         (last-occurrence s alostars)))
+
+(equal? 'radio (last-occurrence 'Matt alos))
+(equal? 'guitar (last-occurrence 'Wen alos))
+(equal? 'trumpet (last-occurrence 'Robby alos))
+(equal? false (last-occurrence 'Jingjing alos))
