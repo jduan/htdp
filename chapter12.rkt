@@ -174,3 +174,62 @@
 (equal? 'guitar (last-occurrence 'Wen alos))
 (equal? 'trumpet (last-occurrence 'Robby alos))
 (equal? false (last-occurrence 'Jingjing alos))
+
+;; Determine the largest number of a list of numbers
+(define (maxi nums)
+  (cond
+    [(empty? (rest nums)) (first nums)]
+    [else (local ((define rest-max (maxi (rest nums))))
+                (if (> (first nums) rest-max)
+                  (first nums)
+                  rest-max))]))
+
+(equal? 20 (maxi (list 1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 16 17 18 19 20)))
+(equal? 30 (maxi (list 1 2 3 4 5 6 7 8 9 10 11 30 13 14 15 16 17 18 19 20)))
+
+;; Exercise 18.1.13
+(define-struct child (father mother name date eyes))
+
+;; oldest generation
+(define Carl (make-child empty empty 'Carl 1926 'green))
+(define Bettina (make-child empty empty 'Bettina 1926 'green))
+
+;; middle generation
+(define Adam (make-child Carl Bettina 'Adam 1950 'yellow))
+(define Dave (make-child Carl Bettina 'Dave 1955 'black))
+(define Eva (make-child Carl Bettina 'Eva 1965 'blue))
+(define Fred (make-child empty empty 'Fred 1966 'pink))
+
+;; youngest generation
+(define Gustav (make-child Fred Eva 'Gustav 1988 'brown))
+(define Django (make-child empty Eva 'Django 1990 'grey))
+
+(define Hal (make-child Gustav empty 'Gustav 1988 'hazel))
+
+;; to-blue-eyed-ancestor : ftn  ->  path or false
+;; to compute the path from a-ftn tree to a blue-eyed ancestor
+;; A path is a list of 'father and 'mother. The empty path indicates that a-ftn
+;; has 'blue in the eyes field'
+(define (to-blue-eyed-ancestor a-ftn)
+  (local [(define ancestor-father-side
+            (cond
+              [(child? (child-father a-ftn)) (to-blue-eyed-ancestor (child-father a-ftn))]
+              [else false]))
+          (define ancestor-mother-side
+            (cond
+              [(child? (child-mother a-ftn)) (to-blue-eyed-ancestor (child-mother a-ftn))]
+              [else false]))]
+         (cond
+           [(symbol=? 'blue (child-eyes a-ftn)) empty]
+           [(list? ancestor-father-side) (cons 'father ancestor-father-side)]
+           [(list? ancestor-mother-side) (cons 'mother ancestor-mother-side)]
+           [else false])))
+
+(equal? empty (to-blue-eyed-ancestor Eva))
+(equal? false (to-blue-eyed-ancestor Fred))
+(equal? '(mother) (to-blue-eyed-ancestor Gustav))
+(equal? false (to-blue-eyed-ancestor Dave))
+(equal? false (to-blue-eyed-ancestor Adam))
+(equal? false (to-blue-eyed-ancestor Bettina))
+(equal? false (to-blue-eyed-ancestor Carl))
+(equal? '(father mother) (to-blue-eyed-ancestor Hal))
