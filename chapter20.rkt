@@ -48,3 +48,9 @@
 
 (equal? (find-all-not-car '(hello world car you rock))
         '(hello world you rock))
+
+;; Exercise 20.2.4
+;; sort: (listof X) (X X -> boolean) -> (listof X)
+;; map: (X -> X) (listof X) -> (listof X)
+;; project: (listof (listof X)) (listof X -> X) -> (listof X)
+
