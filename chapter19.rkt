@@ -100,3 +100,15 @@
 
 (equal? (sort '(2 3 1 5 4) <) '(1 2 3 4 5))
 (equal? (sort '(2 3 1 5 4) >) '(5 4 3 2 1))
+
+;; Exercise 19.2.2
+(define-struct ir (name price))
+
+(define inventory-records
+  (list (make-ir 'book 25)
+        (make-ir 'video 5)
+        (make-ir 'audio 7)
+        (make-ir 'ce 100)))
+
+(sort inventory-records (lambda (r1 r2) (< (ir-price r1) (ir-price r2))))
+(sort inventory-records (lambda (r1 r2) (> (ir-price r1) (ir-price r2))))
