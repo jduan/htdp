@@ -33,3 +33,48 @@
 
 (define (tabulate-tan n)
   (tabulate tan n))
+
+;; Exercise 21.1.2
+;; sum : (listof number) -> number
+;; to compute the sum of a list of numbers
+(define (sum alon)
+  (cond
+    [(empty? alon) 0]
+    [else (+ (first alon) (sum (rest alon)))]))
+
+(equal? (sum '(1 2 3 4 5)) 15)
+
+;; product : (listof number) -> number
+;; to compute the product of a list of numbers
+(define (product alon)
+  (cond
+    [(empty? alon) 1]
+    [else (* (first alon) (product (rest alon)))]))
+
+(equal? (product '(1 2 3 4 5)) 120)
+
+;; fold: (listof X) init f ->
+(define (fold lst init acc)
+  (cond
+    [(empty? lst) init]
+    [else (acc (first lst) (fold (rest lst) init acc))]))
+
+(define (sum1 alon)
+  (fold alon 0 +))
+
+(equal? (sum1 '(1 2 3 4 5)) 15)
+
+(define (product1 alon)
+  (fold alon 1 *))
+
+(equal? (product1 '(1 2 3 4 5)) 120)
+
+(define (append lst1 lst2)
+  (fold lst1 lst2 cons))
+
+(equal? (append '(1 2 3) '(4 5 6)) '(1 2 3 4 5 6))
+
+(define (map2 lst f)
+  (fold lst empty (lambda (x l) (cons (f x) l))))
+
+(equal? (map2 '(1 2 3) add1) '(2 3 4))
