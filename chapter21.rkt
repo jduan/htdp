@@ -78,3 +78,26 @@
   (fold lst empty (lambda (x l) (cons (f x) l))))
 
 (equal? (map2 '(1 2 3) add1) '(2 3 4))
+
+;; Exercise 21.1.3
+(define (natural-f n obj f init)
+  (cond
+    [(zero? n) init]
+    [else (f obj (natural-f (sub1 n) obj f init))]))
+
+(define (copy n obj)
+  (natural-f n obj cons empty))
+
+(equal? (copy 5 'hello) '(hello hello hello hello hello))
+
+(define (n-adder n x)
+  (natural-f n 1 + x))
+
+(equal? (n-adder 10 5) 15)
+(equal? (n-adder 100 5) 105)
+
+(define (n-multiplier n x)
+  (natural-f n x + 0))
+
+(equal? (n-multiplier 10 5) 50)
+(equal? (n-multiplier 3 5) 15)
