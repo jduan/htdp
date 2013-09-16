@@ -101,3 +101,13 @@
 
 (equal? (n-multiplier 10 5) 50)
 (equal? (n-multiplier 3 5) 15)
+
+(equal? (build-list 10 identity) '(0 1 2 3 4 5 6 7 8 9))
+(equal? (filter even? (build-list 10 identity))
+        '(0 2 4 6 8))
+(equal? (andmap even? (build-list 10 identity)) false)
+(equal? (andmap number? (build-list 10 identity)) true)
+(equal? (ormap symbol? (build-list 10 identity)) false)
+(equal? (ormap symbol? (cons 'hello (build-list 10 identity))) true)
+(equal? (foldr + 100 (build-list 10 identity)) 145)
+(equal? (foldl + 100 (build-list 10 identity)) 145)
