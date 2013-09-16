@@ -140,3 +140,14 @@
           (list 1 0 0)
           (list 0 1 0)
           (list 0 0 1)))
+
+;; Exercise 21.2.2
+(define (convert-euro lod)
+  (map (lambda (dollar) (* dollar 1.22)) lod))
+
+(equal? (convert-euro '(1 2 3 )) '(1.22 2.44 3.66))
+
+(define (convertFC lom)
+  (map (lambda (fahhenheit) (* 5/9 (- fahhenheit 32))) lom))
+
+(equal? (convertFC '(32 72 100)) '(0 200/9 340/9))
