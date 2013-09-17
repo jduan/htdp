@@ -151,3 +151,28 @@
   (map (lambda (fahhenheit) (* 5/9 (- fahhenheit 32))) lom))
 
 (equal? (convertFC '(32 72 100)) '(0 200/9 340/9))
+
+;; Exercise 21.2.3
+(define-struct toy (name price))
+;; eliminate-exp : number (listof toys) -> (listof toys)
+;; Return a list of descriptions of toys whose price is below a number
+(define (eliminate-exp ua toys)
+  (map (lambda (toy) (toy-name toy))
+       (filter (lambda (toy) (< (toy-price ua))) toys)))
+
+;; recall : toy-name (listof names) -> (listof names)
+(define (recall toy-name names)
+  (filter (lambda (name) (not (symbol=? name toy-name)))))
+
+;; selection : (listof names) (listof names) -> (listof names)
+(define (selection names1 names2)
+  (local ((define (has? lst name)
+            (not (empty?
+                   (filter (lambda (sym) (= sym name)) lst)))))
+         (filter (lambda (name) (has? names1 name)) names2)))
+(equal? (selection (list 2 4 6 8 10)
+                   (list 1 2 3 4 5 6 7 8 9 10))
+        '(2 4 6 8 10))
+(equal? (selection (list 1 2 3 4 5 6 7 8 9 10)
+                   (list 2 4 6 8 10))
+        '(2 4 6 8 10))
