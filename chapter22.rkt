@@ -148,3 +148,35 @@
   (list
     (list text-field a-message)
     (list a-button)))
+
+;; Exercise 22.3.3
+(require htdp/gui)
+(define (pad->gui title a-message table)
+  (create-window
+    (cons
+      (list (make-message title))
+      (cons
+        (list a-message)
+        (map list->buttons table)))))
+
+(define a-message
+  (make-message ""))
+
+(define (button-callback e)
+  (draw-message a-message
+                "not working yet"))
+
+(define (list->buttons lst)
+  (map (lambda (cell)
+               (cond
+                 [(number? cell) (make-button (number->string cell) button-callback)]
+                 [(symbol? cell) (make-button (symbol->string cell) button-callback)]
+                 [else (error 'list->buttons "cell can only be number or symbol")]))
+       lst))
+
+(pad->gui "phone"
+          a-message
+          '((1 2 3)
+              (4 5 6)
+              (7 8 9)
+              (\# 0 *)))
