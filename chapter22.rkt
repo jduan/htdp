@@ -118,3 +118,33 @@
  (list
   (append digit-choosers (list a-msg))
   (list (make-button "Check Guess" check-call-back))))
+
+
+;; Exercise 22.3.2
+(require htdp/gui)
+(define phone-numbers
+  (list
+    (list "Jingjing Duan" "2067909796")
+    (list "Qingqing Lin" "2062342430")))
+
+(define text-field (make-text "Enter name"))
+
+(define a-message (make-message "ddd-ddd-dddd"))
+
+(define (lookup-phone-number name table)
+  (cond
+    [(empty? table) "Not found"]
+    [(string=? name (first (first table))) (second (first table))]
+    [else (lookup-phone-number name (rest table))]))
+
+(define (lookup-callback e)
+  (draw-message a-message
+                (lookup-phone-number (text-contents text-field)
+                                     phone-numbers)))
+
+(define a-button (make-button "lookup" lookup-callback))
+
+(create-window
+  (list
+    (list text-field a-message)
+    (list a-button)))
