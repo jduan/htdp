@@ -69,3 +69,52 @@
 (equal? ((myfoldl - 0) '(1 2 3 4)) 2)
 (equal? ((myfoldl / 1) '(1 2 3 4)) 8/3)
 (equal? ((myfoldl cons '(1 2 3)) '(4 5 6)) '(6 5 4 1 2 3))
+
+;; Exercise 22.3.1
+;; Model:
+;; build-number : (listof digit)  ->  number
+;; to translate a list of digits into a number
+;; example: (build-number (list 1 2 3)) = 123
+(require htdp/gui)
+(define (build-number digits)
+  (local ((define (build-number-helper digits acc)
+            (cond
+              [(empty? digits) acc]
+              [else (build-number-helper (rest digits) (+ (first digits) (* 10 acc)))])))
+         (build-number-helper digits 0)))
+
+;; View:
+;; the ten digits as strings
+(define DIGITS
+  (build-list 10  number->string))
+
+;; a list of three digit choice menus
+(define digit-choosers
+  (local ((define (builder i) (make-choice DIGITS)))
+    (build-list 3 builder)))
+
+;; a message field for saying hello and displaying the number
+(define a-msg
+  (make-message "Welcome"))
+
+;; Controller:
+;; check-call-back : X  ->  true
+;; to get the current choices of digits, convert them to a number,
+;; and to draw this number as a string into the message field
+(define (check-call-back b)
+  (draw-message a-msg
+                (check-guess
+                  (build-number
+                    (map choice-index digit-choosers)))))
+
+(define (check-guess guess)
+  (if (= guess TARGET)
+    "Bingo!"
+    "Incorrect guess."))
+
+(define TARGET 159)
+
+(create-window
+ (list
+  (append digit-choosers (list a-msg))
+  (list (make-button "Check Guess" check-call-back))))
