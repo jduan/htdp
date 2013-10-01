@@ -99,4 +99,16 @@
 
 (check-expect ((sequence2 (geometric-series 3 5)) 5) '(3 15 75 375 1875))
 
+;; Exercise 23.3.5
+(define sum-of-g-fives (series-local g-fives))
+(check-expect (sum-of-g-fives 3) 468)
+(check-expect (sum-of-g-fives 7) 292968)
+(check-expect (sum-of-g-fives 88) 121169035041947413311241507627435964877804508432745933532714843)
+
+(define sum-of-g-series (series-local (geometric-series 1 .1)))
+(check-within(sum-of-g-series 3) 1.111 0.00001)
+(check-within (sum-of-g-series 7) 1.1111111 0.00000000001)
+(check-within (sum-of-g-series 88) 1.1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
+              (expt 0.1 100))
+
 (test)
