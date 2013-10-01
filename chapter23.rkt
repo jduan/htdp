@@ -55,4 +55,12 @@
   (reverse (seq-reversed n)))
 
 (check-expect (seq-a-fives 10) '(8 13 18 23 28 33 38 43 48 53 58))
+
+;; Exercise 23.2.5
+(define (arithmetic-series start s)
+  (lambda (n)
+          (+ start (* s (add1 n)))))
+
+(check-expect ((arithmetic-series 3 5) 10) (a-fives 10))
+(check-expect ((arithmetic-series 0 2) 10) (make-even 11))
 (test)
