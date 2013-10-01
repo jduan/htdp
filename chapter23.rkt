@@ -120,4 +120,14 @@
   (exact->inexact ((series-local e-tylor) 10)))
 (e-power 1)
 
+;; Exercise 23.3.7
+(define (ln x)
+  (define (e-tylor i)
+    (if (even? i) 0
+      (* 2 (/ 1 i) (expt
+                     (/ (sub1 x) (add1 x))
+                     i))))
+  (exact->inexact ((series-local e-tylor) 1000)))
+(ln 10)
+
 (test)
