@@ -86,5 +86,10 @@
 
 (check-expect ((sequence2 g-fives) 5) '(3 15 75 375 1875))
 
+;; Exercise 23.3.2
+(define (g-fives-closed n)
+  (* 3 (expt 5 n)))
+
+(check-expect ((sequence2 g-fives-closed) 5) '(3 15 75 375 1875))
 
 (test)
