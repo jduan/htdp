@@ -45,4 +45,14 @@
 (check-expect (sum-of-a-fives 3) 62)
 (check-expect (sum-of-a-fives 7) 204)
 (check-expect (sum-of-a-fives 88) 20292)
+
+;; Exercise 23.2.4
+(define (seq-a-fives n)
+  (define (seq-reversed n)
+    (cond
+      [(zero? n) (list (a-fives n))]
+      [else (cons (a-fives n) (seq-reversed (sub1 n)))]))
+  (reverse (seq-reversed n)))
+
+(check-expect (seq-a-fives 10) '(8 13 18 23 28 33 38 43 48 53 58))
 (test)
