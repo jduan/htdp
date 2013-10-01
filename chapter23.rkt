@@ -40,4 +40,9 @@
 (check-expect (a-fives-closed 1) 13)
 (check-expect (a-fives-closed 2) 18)
 
+;; Exercise 23.2.3
+(define sum-of-a-fives (series-local a-fives))
+(check-expect (sum-of-a-fives 3) 62)
+(check-expect (sum-of-a-fives 7) 204)
+(check-expect (sum-of-a-fives 88) 20292)
 (test)
