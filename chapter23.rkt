@@ -23,4 +23,21 @@
 (check-expect (series-even2 9) 90)
 (check-expect (series-odd2 9) 100)
 
+;; Exercise 23.2.1
+(define (a-fives n)
+  (cond
+    [(zero? n) 8]
+    [else (+ 5 (a-fives (sub1 n)))]))
+
+(check-expect (a-fives 0) 8)
+(check-expect (a-fives 1) 13)
+(check-expect (a-fives 2) 18)
+
+;; Exercise 23.2.2
+(define (a-fives-closed n)
+  (+ 3 (* 5 (add1 n))))
+(check-expect (a-fives-closed 0) 8)
+(check-expect (a-fives-closed 1) 13)
+(check-expect (a-fives-closed 2) 18)
+
 (test)
