@@ -111,4 +111,13 @@
 (check-within (sum-of-g-series 88) 1.1111111111111111111111111111111111111111111111111111111111111111111111111111111111111111
               (expt 0.1 100))
 
+;; Exercise 23.3.6
+(define (e-power x)
+  (define (factorial n)
+    (if (zero? n) 1 (* n (factorial (sub1 n)))))
+  (define (e-tylor i)
+    (/ (expt x i) (factorial i)))
+  (exact->inexact ((series-local e-tylor) 10)))
+(e-power 1)
+
 (test)
