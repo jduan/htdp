@@ -63,4 +63,28 @@
 
 (check-expect ((arithmetic-series 3 5) 10) (a-fives 10))
 (check-expect ((arithmetic-series 0 2) 10) (make-even 11))
+
+;; Exercise 23.3.1
+(define (g-fives n)
+  (cond
+    [(zero? n) 3]
+    [else (* 5 (g-fives (sub1 n)))]))
+
+(define (sequence a-term)
+  (define (seq-reversed n)
+    (cond
+      [(zero? n) (list (a-term n))]
+      [else (cons (a-term n) (seq-reversed (sub1 n)))]))
+  (lambda (n)
+          (reverse (seq-reversed n))))
+
+(check-expect ((sequence g-fives) 4) '(3 15 75 375 1875))
+
+(define (sequence2 a-term)
+  (lambda (n)
+          (map a-term (for/list ([x (in-range n)]) x))))
+
+(check-expect ((sequence2 g-fives) 5) '(3 15 75 375 1875))
+
+
 (test)
