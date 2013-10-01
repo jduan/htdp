@@ -92,4 +92,11 @@
 
 (check-expect ((sequence2 g-fives-closed) 5) '(3 15 75 375 1875))
 
+;; Exercise 23.3.4
+(define (geometric-series start s)
+  (lambda (n)
+          (* start (expt s n))))
+
+(check-expect ((sequence2 (geometric-series 3 5)) 5) '(3 15 75 375 1875))
+
 (test)
