@@ -141,4 +141,13 @@
   (exact->inexact ((series-local e-tylor) 100)))
 (my-sin 10)
 
+;; Exercise 23.3.9
+(define (my-pi)
+  (define (greg i)
+    (let ([index (add1 (* i 2))]
+          [sign (if (even? i) 1 -1)])
+      (* sign (/ 4 index))))
+  (exact->inexact ((series-local greg) 1000)))
+(my-pi)
+
 (test)
