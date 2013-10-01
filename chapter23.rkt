@@ -130,4 +130,15 @@
   (exact->inexact ((series-local e-tylor) 1000)))
 (ln 10)
 
+;; Exercise 23.3.8
+(define (my-sin x)
+  (define (factorial n)
+    (if (zero? n) 1 (* n (factorial (sub1 n)))))
+  (define (e-tylor i)
+    (let ([index (add1 (* i 2))]
+          [sign (if (even? i) 1 -1)])
+      (* sign (/ (expt x index) (factorial index)))))
+  (exact->inexact ((series-local e-tylor) 100)))
+(my-sin 10)
+
 (test)
