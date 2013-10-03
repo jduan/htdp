@@ -36,7 +36,45 @@
     [else (and (draw-and-clear a-ball)
                (move-until-out (move-ball a-ball)))]))
 
+;(start WIDTH HEIGHT)
+;;;(move-until-out (make-ball 10 20 0 0))
+;(move-until-out the-ball)
+;(stop)
+
+;; Exercise 25.1.2
+(define (move-all-balls-until-out list-of-balls)
+  (cond
+    [(andmap out-of-bounds? list-of-balls) true]
+    [else
+     (and (draw-and-clear-all-balls list-of-balls)
+          (move-all-balls-until-out (map move-ball list-of-balls)))]))
+
+(define (draw-and-clear-all-balls list-of-balls)
+  (and
+    (andmap (lambda (a-ball) (draw-solid-disk (make-posn (ball-x a-ball) (ball-y a-ball)) 5 'red)) list-of-balls)
+    (sleep-for-a-while DELAY)
+    (andmap (lambda (a-ball) (clear-solid-disk (make-posn (ball-x a-ball) (ball-y a-ball)) 5 'red)) list-of-balls)))
+
 (start WIDTH HEIGHT)
-;;(move-until-out (make-ball 10 20 0 0))
-(move-until-out the-ball)
+(move-all-balls-until-out
+  (list (make-ball 10 20 5 5)
+        (make-ball 30 40 -5 -3)))
 (stop)
+
+;; quicksort
+(define (qsort numbers)
+  (cond
+    [(empty? numbers) empty]
+    [else
+     (let [(pivot (first numbers))]
+     (append (qsort (smaller-numbers numbers pivot))
+             (first numbers)
+             (qsort (bigger-numbers numbers ()))))]))
+
+(define (smaller-numbers numbers pivot)
+  (filter (lambda (n) (<= n pivot)) numbers))
+
+(define (bigger-numbers numbers pivot)
+  (filter (lambda (n) (> n pivot)) numbers))
+
+(qsort '(3 1 5 3 2))
