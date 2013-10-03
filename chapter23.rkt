@@ -150,4 +150,5 @@
   (exact->inexact ((series-local greg) 1000)))
 (my-pi)
 
+;; TODO: read sections 23.4 and 23.5
 (test)
