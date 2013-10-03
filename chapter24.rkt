@@ -13,5 +13,23 @@
 ;; invalid
 ;; (lambda x 10)
 
-
+;; Exercise 24.0.8
+(check-expect ((lambda (x y)
+                       (+ x (* x y))) 3 4)
+              15)
+(check-expect ((lambda (x y)
+                      (+ x
+                         (local ((define x (* y y)))
+                                (+ (* 3 x)
+                                   (/ 1 x)))))
+                 3 4)
+              817/16)
+(check-expect ((lambda (x y)
+                       (+ x
+                          ((lambda (x)
+                                   (+ (* 3 x)
+                                      (/ 1 x)))
+                             (* y y))))
+                 3 4)
+              817/16)
 (test)
