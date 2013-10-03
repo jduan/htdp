@@ -32,4 +32,25 @@
                              (* y y))))
                  3 4)
               817/16)
+
+;; Exercise 24.0.9
+(check-expect ((lambda (x y)
+                       (+ x (* x y)))
+                 1 2)
+              3)
+(check-expect ((lambda (x y)
+                      (+ x
+                         (local ((define x (* y y)))
+                                (+ (* 3 x)
+                                   (/ 1 x)))))
+                 1 2)
+              53/4)
+(check-expect ((lambda (x y)
+                       (+ x
+                          ((lambda (x)
+                                   (+ (* 3 x)
+                                      (/ 1 x)))
+                             (* y y))))
+                 1 2)
+              53/4)
 (test)
