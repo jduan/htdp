@@ -67,14 +67,41 @@
     [(empty? numbers) empty]
     [else
      (let [(pivot (first numbers))]
-     (append (qsort (smaller-numbers numbers pivot))
-             (first numbers)
-             (qsort (bigger-numbers numbers ()))))]))
+       (append (qsort (smaller-numbers (rest numbers) pivot))
+               (list pivot)
+               (qsort (bigger-numbers (rest numbers) pivot))))]))
 
 (define (smaller-numbers numbers pivot)
-  (filter (lambda (n) (<= n pivot)) numbers))
+  (cond
+    [(empty? numbers) empty]
+    [else (filter (lambda (n) (<= n pivot)) numbers)]))
 
 (define (bigger-numbers numbers pivot)
-  (filter (lambda (n) (> n pivot)) numbers))
+  (cond
+    [(empty? numbers) empty]
+    [(filter (lambda (n) (> n pivot)) numbers)]))
+
+(qsort '(3 1 5 3 2))
+
+;; Exercise 25.2.2
+(define (qsort numbers)
+  (cond
+    [(empty? numbers) empty]
+    [(empty? (rest numbers)) numbers]
+    [else
+     (let [(pivot (first numbers))]
+       (append (qsort (smaller-numbers (rest numbers) pivot))
+               (list pivot)
+               (qsort (bigger-numbers (rest numbers) pivot))))]))
+
+(define (smaller-numbers numbers pivot)
+  (cond
+    [(empty? numbers) empty]
+    [else (filter (lambda (n) (<= n pivot)) numbers)]))
+
+(define (bigger-numbers numbers pivot)
+  (cond
+    [(empty? numbers) empty]
+    [(filter (lambda (n) (> n pivot)) numbers)]))
 
 (qsort '(3 1 5 3 2))
