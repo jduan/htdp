@@ -146,3 +146,21 @@
     [(filter (lambda (n) (> n pivot)) numbers)]))
 
 (qsort2 '(3 1 5 3 2))
+
+;; Exercise 25.2.6
+(define (general-qsort pred? lst)
+  (cond
+    [(empty? lst) lst]
+    [else
+     (let ([pivot (first lst)])
+       (append (general-qsort pred? (left-half (rest lst) pivot pred?))
+               (list pivot)
+               (general-qsort pred? (right-half (rest lst) pivot pred?))))]))
+
+(define (left-half lst pivot pred?)
+  (filter (lambda (e) (pred? e pivot)) lst))
+
+(define (right-half lst pivot pred?)
+  (filter (lambda (e) (not (pred? e pivot))) lst))
+
+(general-qsort < '(3 1 5 3 2 ))
