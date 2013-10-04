@@ -105,3 +105,44 @@
     [(filter (lambda (n) (> n pivot)) numbers)]))
 
 (qsort '(3 1 5 3 2))
+
+;; Exercise 25.2.3
+(define (insert-to-sorted-list n alon sort-f)
+  (if (empty? alon)
+    (cons n empty)
+    (if (sort-f n (first alon))
+      (cons n alon)
+      (cons (first alon) (insert-to-sorted-list n (rest alon) sort-f)))))
+
+;; Sort a list of numbers in ascending order
+(define (mysort alon sort-f)
+  (if (empty? alon)
+    empty
+    (insert-to-sorted-list
+      (first alon)
+      (mysort (rest alon) sort-f)
+      sort-f)))
+
+(define (sort-n alon)
+  (mysort alon <))
+
+(define (qsort2 numbers)
+  (cond
+    [(< (length numbers) 4) (sort-n numbers)]
+    [else
+     (let [(pivot (first numbers))]
+       (append (qsort2 (smaller-numbers (rest numbers) pivot))
+               (list pivot)
+               (qsort2 (bigger-numbers (rest numbers) pivot))))]))
+
+(define (smaller-numbers numbers pivot)
+  (cond
+    [(empty? numbers) empty]
+    [else (filter (lambda (n) (<= n pivot)) numbers)]))
+
+(define (bigger-numbers numbers pivot)
+  (cond
+    [(empty? numbers) empty]
+    [(filter (lambda (n) (> n pivot)) numbers)]))
+
+(qsort2 '(3 1 5 3 2))
