@@ -64,4 +64,22 @@
 (check-expect (merge-sort (list)) (list))
 (check-expect (merge-sort (list 2 5 9 3)) (list 2 3 5 9))
 (check-expect (merge-sort (list 2 5 9 2 3)) (list 2 2 3 5 9))
+
+;; Exercise 26.2.1
+(define (determine-solution problem)
+  0)
+
+(define (combine-solutions problem sub-result)
+  (add1 sub-result))
+
+(define (generative-recursive-fun problem)
+  (cond
+    [(empty? problem) (determine-solution problem)]
+    [else
+     (combine-solutions
+       problem
+       (generative-recursive-fun (rest problem)))]))
+
+(check-expect (generative-recursive-fun '(1 2 3 4)) 4)
+(check-expect (generative-recursive-fun '()) 0)
 (test)
