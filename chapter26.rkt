@@ -82,4 +82,28 @@
 
 (check-expect (generative-recursive-fun '(1 2 3 4)) 4)
 (check-expect (generative-recursive-fun '()) 0)
+
+(define (gcd n m)
+  (define (loop x)
+    (if (and (zero? (remainder n x))
+             (zero? (remainder m x)))
+      x
+      (loop (sub1 x))))
+  (loop (min n m)))
+
+(check-expect (gcd 6 25) 1)
+(check-expect (gcd 18 24) 6)
+(check-expect (gcd 101135853 45014640) 177)
+
+(define (gcd2 n m)
+  (define (loop larger smaller)
+    (if (zero? smaller)
+      larger
+      (loop smaller (remainder larger smaller))))
+  (loop (max n m) (min n m)))
+
+(check-expect (gcd2 6 25) 1)
+(check-expect (gcd2 18 24) 6)
+(check-expect (gcd2 101135853 45014640) 177)
+
 (test)
