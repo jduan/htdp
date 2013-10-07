@@ -89,4 +89,23 @@
               (list (list 1 2)
                     (list 3 4)))
 
+;; Exercise 27.3.1
+(define (find-root f left right)
+  (cond
+    [(<= (- right left) TOLERANCE) left]
+    [else
+     (let [(mid (/ (+ left right) 2))]
+       (cond
+         [(<= (* (f left) (f mid)) 0) (find-root f left mid)]
+         [else (find-root f mid right)]))]))
+
+(define TOLERANCE 0.01)
+(define (poly x)
+  (* (- x 2) (- x 4)))
+
+(check-expect (<= (- (find-root poly 3 6) 4) 0.01) true)
+(check-expect (<= (- (find-root poly 1 3.5) 2) 0.01) true)
+(check-expect (<= (- (find-root poly 1 2.5) 2) 0.01) true)
+
+
 (test)
