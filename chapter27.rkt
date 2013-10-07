@@ -29,7 +29,26 @@
   (draw-solid-line a c 'red)
   (draw-solid-line b c 'red))
 
-(start 500 500)
-(sierpinski (make-posn 200 0) (make-posn 0 400) (make-posn 400 400))
+;(start 500 500)
+;(sierpinski (make-posn 200 0) (make-posn 0 400) (make-posn 400 400))
+
+;; Exercise 27.2.2
+(define (file->list-of-lines afile)
+  (define (remove-first-line afile)
+    (cond
+      [(symbol=? 'NL (first afile)) (rest afile)]
+      [else (remove-first-line (rest afile))]))
+  (define (first-line afile)
+    (cond
+      [(symbol=? 'NL (first afile)) empty]
+      [else (cons (first afile) (first-line (rest afile)))]))
+  (cond
+    [(empty? afile) empty]
+    [else
+     (cons (first-line afile)
+           (file->list-of-lines (remove-first-line afile)))]))
+
+(define FILE (list 'a 'b 'c 'NL 'd 'e 'NL 'f 'g 'h 'NL))
+(check-expect (file->list-of-lines FILE) '((a b c) (d e) (f g h)))
 
 (test)
