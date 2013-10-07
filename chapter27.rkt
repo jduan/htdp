@@ -36,11 +36,11 @@
 (define (file->list-of-lines afile)
   (define (remove-first-line afile)
     (cond
-      [(symbol=? 'NL (first afile)) (rest afile)]
+      [(and (symbol? (first afile)) (symbol=? 'NL (first afile)) (rest afile))]
       [else (remove-first-line (rest afile))]))
   (define (first-line afile)
     (cond
-      [(symbol=? 'NL (first afile)) empty]
+      [(and (symbol? (first afile)) (symbol=? 'NL (first afile))) empty]
       [else (cons (first afile) (first-line (rest afile)))]))
   (cond
     [(empty? afile) empty]
@@ -50,5 +50,43 @@
 
 (define FILE (list 'a 'b 'c 'NL 'd 'e 'NL 'f 'g 'h 'NL))
 (check-expect (file->list-of-lines FILE) '((a b c) (d e) (f g h)))
+
+;; Exercise 27.2.3
+(define-struct rr (table costs) #:transparent)
+(define (file->list-of-checks afile)
+  (let [(list-of-lines (file->list-of-lines afile))]
+    (map
+      (lambda (line)
+              (make-rr (first line) (rest line)))
+      list-of-lines)))
+
+(check-expect
+  (equal? (file->list-of-checks
+            (list 1 2.30 4.00 12.50 13.50 'NL
+                  2 4.00 18.00 'NL
+                  4 2.30 12.50 'NL))
+          (list (make-rr 1 (list 2.30 4.00 12.50 13.50))
+                (make-rr 2 (list 4.00 18.00))
+                (make-rr 4 (list 2.30 12.50))))
+  true)
+
+;; Exercise 27.2.4
+(define (create-matrix n lst)
+  (define (first-row n lst)
+    (cond
+      [(zero? n) empty]
+      [else (cons (first lst) (first-row (sub1 n) (rest lst)))]))
+  (define (remove-first-row n lst)
+    (cond
+      [(zero? n) lst]
+      [else (remove-first-row (sub1 n) (rest lst))]))
+  (cond
+    [(empty? lst) empty]
+    [else (cons (first-row n lst)
+                (create-matrix n (remove-first-row n lst)))]))
+
+(check-expect (create-matrix 2 (list 1 2 3 4))
+              (list (list 1 2)
+                    (list 3 4)))
 
 (test)
