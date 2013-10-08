@@ -107,5 +107,21 @@
 (check-expect (<= (- (find-root poly 1 3.5) 2) 0.01) true)
 (check-expect (<= (- (find-root poly 1 2.5) 2) 0.01) true)
 
+;; Exercise 27.3.4
+(define (find-root2 f left right)
+  (define (find-root-aux left right f-left f-right)
+    (cond
+      [(<= (- right left) TOLERANCE) left]
+      [else
+       (let* [(mid (/ (+ left right) 2))
+              (f-mid (f mid))]
+         (cond
+           [(<= (* f-left f-mid) 0) (find-root-aux left mid f-left f-mid)]
+           [else (find-root-aux mid right f-mid f-right)]))]))
+  (find-root-aux left right (f left) (f right)))
+
+(check-expect (<= (- (find-root2 poly 3 6) 4) 0.01) true)
+(check-expect (<= (- (find-root2 poly 1 3.5) 2) 0.01) true)
+(check-expect (<= (- (find-root2 poly 1 2.5) 2) 0.01) true)
 
 (test)
