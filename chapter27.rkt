@@ -124,4 +124,25 @@
 (check-expect (<= (- (find-root2 poly 1 3.5) 2) 0.01) true)
 (check-expect (<= (- (find-root2 poly 1 2.5) 2) 0.01) true)
 
+;; Exercise 27.3.5
+(define (find-root-linear table length)
+  (cond
+    [(= 1 length) (table 0)]
+    [else
+     (let [(root (find-root-linear table (sub1 length)))
+           (value (table (sub1 length)))]
+       (cond
+         [(< (abs value) (abs root)) value]
+         [else root]))]))
+
+(define TABLE-LENGTH 5)
+(define (table i)
+  (cond
+    [(= 0 i) -10]
+    [(= 1 i) -5]
+    [(= 2 i) -3]
+    [(= 3 i) 5]
+    [(= 4 i) 10]))
+
+(check-expect (find-root-linear table TABLE-LENGTH) -3)
 (test)
