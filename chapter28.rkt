@@ -131,4 +131,73 @@
 ;; failure
 (check-expect (threatened? (make-posn 0 0) (make-posn 2 3)) false)
 
+;; Exercise 28.2.4
+(define (placement n board)
+  (placement-helper n board empty))
+
+(define (update-board board pos value)
+  (for/list ([i (board-dim board)]
+             [lst board])
+            (if (= i (posn-x pos))
+              (list-update lst (posn-y pos) value)
+              lst)))
+
+(define (list-update lst idx value)
+  (for/list ([i (length lst)]
+             [element lst])
+            (if (= i idx)
+              value
+              element)))
+
+;; The cache is used to avoid repeated computation because the problem space can
+;; be quite large even for 8 queens!
+(define Cache (make-hash))
+
+(define (placement-helper n board list-of-queens)
+  (if (hash-has-key? Cache board)
+    (hash-ref Cache board)
+    (if (= n (length list-of-queens))
+      (list board)
+      (let* [(positions (all-positions board))
+             (candidates (filter (lambda (p) (not  (threatened2? p list-of-queens)))
+                                 positions))
+             (boards (remove-duplicates
+                       (foldl
+                         (lambda (candidate acc)
+                                 (let [(results (placement-helper n
+                                                                  (update-board board candidate false)
+                                                                  (cons candidate list-of-queens)))]
+                                   (append results acc))
+                                 )
+                         empty
+                         candidates)))]
+        (hash-set! Cache board boards)
+        boards))))
+
+(define (all-positions board)
+  (for*/list ([i (board-dim board)]
+              [j (board-dim board)])
+             (make-posn i j)
+             ))
+
+;; Given a list of queens, figure out if you can place another queen at
+;; position p.
+(define (threatened2? p queens)
+  (>
+    (length
+      (filter (lambda (b) b)
+              (map (lambda (q) (threatened? q p)) queens)))
+    0))
+
+;; return the dimention of a board
+(define (board-dim board)
+  (length board))
+
+(define Board-Size 8)
+(define Board (build-board Board-Size (lambda (i j) true)))
+(define solutions (placement Board-Size Board))
+;; There are 92 solutions for the 8-queen problem
+;; http://en.wikipedia.org/wiki/Eight_queens_puzzle
+(check-expect (length solutions) 92)
+(pretty-print solutions)
 (test)
