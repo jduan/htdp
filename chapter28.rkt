@@ -99,4 +99,36 @@
 (check-expect (board-ref (build-board 2 (lambda (x y) (odd? x))) 0 1) false)
 
 (check-expect (board-ref (build-board 2 (lambda (x y) (odd? x))) 1 0) true)
+
+;; Exercise 28.2.3
+(define-struct posn (x y))
+(define (threatened? queen-pos another-pos)
+  (or (= (posn-x queen-pos) (posn-x another-pos))
+      (= (posn-y queen-pos) (posn-y another-pos))
+      (let [(slope (/ (- (posn-x queen-pos) (posn-x another-pos))
+                      (- (posn-y queen-pos) (posn-y another-pos))))]
+        (or (= 1 slope)
+            (= -1 slope)))))
+
+;; same position
+(check-expect (threatened? (make-posn 0 0) (make-posn 0 0)) true)
+
+;; same vertical
+(check-expect (threatened? (make-posn 0 0) (make-posn 0 1)) true)
+
+;; same horizontal
+(check-expect (threatened? (make-posn 0 0) (make-posn 1 0)) true)
+
+;; same diagonal (up and left)
+(check-expect (threatened? (make-posn 1 1) (make-posn 2 2)) true)
+(check-expect (threatened? (make-posn 2 1) (make-posn 3 2)) true)
+(check-expect (threatened? (make-posn 5 8) (make-posn 9 12)) true)
+
+;; same diagonal (down and right)
+(check-expect (threatened? (make-posn 3 3) (make-posn 4 2)) true)
+(check-expect (threatened? (make-posn 5 8) (make-posn 1 12)) true)
+
+;; failure
+(check-expect (threatened? (make-posn 0 0) (make-posn 2 3)) false)
+
 (test)
