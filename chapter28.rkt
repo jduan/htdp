@@ -11,6 +11,14 @@
     (G ())
     (H (C))
     (I (H))))
+(define Cyclic-Graph
+  '((A (B E))
+    (B (E F))
+    (C (B D))
+    (D ())
+    (E (C F))
+    (F (D G))
+    (G ())))
 ;; Exercise 28.1.1
 (check-expect
   G
@@ -28,6 +36,7 @@
 (define (find-route origination destination G)
   (find-route-helper origination destination G empty))
 
+;; Exercise 28.1.2
 (define (find-neighbors node G)
   (second (findf (lambda (lst) (symbol=? (first lst) node))
                  G)))
@@ -58,5 +67,18 @@
 (check-expect '((A B E F G) (A B F G) (A E F G)) (find-route 'A 'G G))
 (check-expect '((A B E C) (A E C)) (find-route 'A 'C G))
 (check-expect empty  (find-route 'I 'G G))
+
+(define (test-on-all-nodes graph)
+  (let [(nodes (map first graph))]
+    (map (lambda (a-node)
+                 (map (lambda (b-node)
+                              (find-route a-node b-node graph))
+                      nodes))
+         nodes)))
+
+;; (pretty-print (test-on-all-nodes G))
+
+(check-expect '((A B E F G) (A B F G) (A E C B F G) (A E F G)) (find-route 'A 'G Cyclic-Graph))
+(check-expect '((C B E F G) (C B F G)) (find-route 'C 'G Cyclic-Graph))
 
 (test)
