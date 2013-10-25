@@ -81,4 +81,22 @@
 (check-expect '((A B E F G) (A B F G) (A E C B F G) (A E F G)) (find-route 'A 'G Cyclic-Graph))
 (check-expect '((C B E F G) (C B F G)) (find-route 'C 'G Cyclic-Graph))
 
+
+;; Exercise 28.2.2
+(define (build-board n f)
+  (build-list n
+              (lambda (i)
+                      (build-list n (lambda (j)
+                                            (f i j))))))
+
+(define (board-ref board i j)
+  (list-ref (list-ref board i) j))
+
+(check-expect (build-board 2 (lambda (x y) (odd? (+ x y))))
+              (list (list false true)
+                    (list true false)))
+
+(check-expect (board-ref (build-board 2 (lambda (x y) (odd? x))) 0 1) false)
+
+(check-expect (board-ref (build-board 2 (lambda (x y) (odd? x))) 1 0) true)
 (test)
