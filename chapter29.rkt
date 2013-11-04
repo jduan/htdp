@@ -137,4 +137,20 @@
 
 (check-expect (id-vector 5) #(1 1 1 1 1))
 (check-expect (id-vector 0) #())
+
+;; Exercise 29.3.12
+(define (my-vector-map v1 v2 f)
+  (build-vector (vector-length v1)
+                (lambda (i)
+                        (f (vector-ref v1 i)
+                           (vector-ref v2 i)))))
+(define (vector+ v1 v2)
+  (my-vector-map v1 v2 +))
+
+(define (vector- v1 v2)
+  (my-vector-map v1 v2 -))
+
+(check-expect (vector- #(1 2 3 4 5) #(6 7 8 9 10)) #(-5 -5 -5 -5 -5))
+(check-expect (vector- #() #()) #())
+
 (test)
