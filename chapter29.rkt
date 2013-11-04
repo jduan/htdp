@@ -153,4 +153,9 @@
 (check-expect (vector- #(1 2 3 4 5) #(6 7 8 9 10)) #(-5 -5 -5 -5 -5))
 (check-expect (vector- #() #()) #())
 
+;; Exercise 29.3.13
+(define (distance v1 v2)
+  (sqrt (vector-sum (vector-map (lambda (x) (sqr x)) (vector- v1 v2)))))
+
+(check-within (distance #(1 2 3 4 5) #(6 7 8 9 10)) (sqrt 125) 0.001)
 (test)
