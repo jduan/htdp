@@ -104,4 +104,23 @@
 (check-expect (vector-contains-doll? (vector 'doll 'world)) 0)
 (check-expect (vector-contains-doll? (vector 'hello 'doll)) 1)
 
+;; Exercise 29.3.9
+(define (binary-contains sorted-vec key)
+  (define (binary-search low high)
+    (cond
+      [(> low high) false]
+      [else (let* [(mid (quotient (+ low high) 2))
+                   (value (vector-ref sorted-vec mid))]
+              (cond
+                [(= key value) mid]
+                [(< key value) (binary-search low (sub1 mid))]
+                [else (binary-search (add1 mid) high)]))]))
+  (binary-search 0 (sub1 (vector-length sorted-vec))))
+
+(check-expect (binary-contains (vector 1 2 3 4 5) 1) 0)
+(check-expect (binary-contains (vector 1 2 3 4 5) 3) 2)
+(check-expect (binary-contains (vector 1 2 3 4 5) 5) 4)
+(check-expect (binary-contains (vector 1 2 3 4 5) 0) false)
+(check-expect (binary-contains (vector 1 2 3 4 5) 6) false)
+
 (test)
