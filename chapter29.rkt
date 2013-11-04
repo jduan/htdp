@@ -85,5 +85,23 @@
 (check-expect (vector-sum2 (vector 1 2 3)) 6)
 (check-expect (vector-sum2 (vector)) 0)
 
+;; Exercise 29.3.7
+(define (norm vec)
+  (sqrt (vector-sum (vector-map (lambda (n) (* n n)) vec))))
+
+(check-within (norm (vector 1 2 3)) (sqrt 14) 0.001)
+
+;; Exercise 29.3.8
+(define (vector-contains-doll? vec)
+  (define (vector-aux i)
+    (cond
+      [(= i (vector-length vec)) false]
+      [(symbol=? (vector-ref vec i) 'doll) i]
+      [else (vector-aux (add1 i))]))
+  (vector-aux 0))
+
+(check-expect (vector-contains-doll? (vector 'hello 'world)) false)
+(check-expect (vector-contains-doll? (vector 'doll 'world)) 0)
+(check-expect (vector-contains-doll? (vector 'hello 'doll)) 1)
 
 (test)
