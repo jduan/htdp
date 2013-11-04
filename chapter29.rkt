@@ -123,4 +123,18 @@
 (check-expect (binary-contains (vector 1 2 3 4 5) 0) false)
 (check-expect (binary-contains (vector 1 2 3 4 5) 6) false)
 
+;; Exercise 29.3.10
+(define (vector-count vec sym)
+  (vector-length (vector-filter (lambda (s) (symbol=? s sym)) vec)))
+
+(check-expect (vector-count (vector 'hello 'world 'yes 'no) 'hello) 1)
+(check-expect (vector-count (vector 'hello 'world 'yes 'no) 'hi) 0)
+(check-expect (vector-count (vector 'hello 'world 'yes 'no) 'yes) 1)
+
+;; Exercise 29.3.11
+(define (id-vector n)
+  (build-vector n (lambda (i) 1)))
+
+(check-expect (id-vector 5) #(1 1 1 1 1))
+(check-expect (id-vector 0) #())
 (test)
