@@ -177,4 +177,14 @@
 (check-expect (board-ref Board 0 0) 0)
 (check-expect (board-ref Board 0 2) 2)
 (check-expect (board-ref Board 2 2) 4)
+
+;; Exercise 29.3.15
+(define (board-size board)
+  (vector-length board))
+
+(define (transpose board)
+  (build-board (board-size board) (lambda (i j) (board-ref board j i))))
+
+(define Board2 (build-board 3 (lambda (i j) (- i j))))
+(check-expect (transpose Board2) #(#(0 1 2) #(-1 0 1) #(-2 -1 0)))
 (test)
