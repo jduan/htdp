@@ -158,4 +158,23 @@
   (sqrt (vector-sum (vector-map (lambda (x) (sqr x)) (vector- v1 v2)))))
 
 (check-within (distance #(1 2 3 4 5) #(6 7 8 9 10)) (sqrt 125) 0.001)
+
+;; Exercise 29.3.14
+(define (build-board n f)
+  (define (build-row row)
+    (build-vector n (lambda (col)
+                            (f row col))))
+  (build-vector n build-row))
+
+(check-expect (build-board 3 (lambda (i j) 1)) #(#(1 1 1) #(1 1 1) #(1 1 1)))
+(check-expect (build-board 3 (lambda (i j) (+ i j))) #(#(0 1 2) #(1 2 3) #(2 3 4)))
+(check-expect (build-board 3 (lambda (i j) (* i j))) #(#(0 0 0) #(0 1 2) #(0 2 4)))
+
+(define (board-ref board i j)
+  (vector-ref (vector-ref board i) j))
+
+(define Board (build-board 3 (lambda (i j) (+ i j))))
+(check-expect (board-ref Board 0 0) 0)
+(check-expect (board-ref Board 0 2) 2)
+(check-expect (board-ref Board 2 2) 4)
 (test)
