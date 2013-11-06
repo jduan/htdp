@@ -55,5 +55,33 @@
 (check-expect (route-exists2? 'A 'D SimpleG) false)
 (check-expect (route-exists2? 'B 'D SimpleG) false)
 
+;; Exercise 30.2.3
+(define SimpleG3
+  #(#(A B)
+    #(B C)
+    #(C E)
+    #(D E)
+    #(E B)
+    #(F F)))
 
+(define (route-exists3? orig dest sg)
+  (define (contains3 node vec)
+    (= 1 (vector-length (vector-filter
+                          (lambda (v) (symbol=? node v))
+                          vec))))
+  (define (next-node3 node vec)
+    (vector-ref (vector-ref (vector-filter
+                              (lambda (v) (symbol=? node (vector-ref v 0)))
+                              vec) 0) 1))
+  (define (re-accu3? orig accu-seen)
+    (cond
+      [(symbol=? orig dest) true]
+      [(contains3 orig accu-seen) false]
+      [else (re-accu3? (next-node3 orig sg) (vector-append accu-seen (vector orig)))]))
+  (re-accu3? orig #()))
+
+(check-expect (route-exists3? 'A 'E SimpleG3) true)
+(check-expect (route-exists3? 'A 'C SimpleG3) true)
+(check-expect (route-exists3? 'A 'D SimpleG3) false)
+(check-expect (route-exists3? 'B 'D SimpleG3) false)
 (test)
