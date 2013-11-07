@@ -73,7 +73,7 @@
                  (helper (node-right tree) (add1 acc)))]))
   (helper tree 0))
 
-;; Exercise 31.3.4
+;; Exercise 31.3.3
 (define (product lon)
   (define (product/acc lon acc)
     (cond
@@ -82,4 +82,15 @@
   (product/acc lon 1))
 
 (check-expect (product (list 1 2 3 4 5)) 120)
+
+;; Exercise 31.3.4
+(define (how-many xs)
+  (define (how-many/acc xs acc)
+    (cond
+      [(empty? xs) acc]
+      [else (how-many/acc (rest xs) (add1 acc))]))
+  (how-many/acc xs 0))
+
+(check-expect (how-many (list 1 2 3 4 5)) 5)
+(check-expect (how-many empty) 0)
 (test)
