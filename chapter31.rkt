@@ -93,4 +93,24 @@
 
 (check-expect (how-many (list 1 2 3 4 5)) 5)
 (check-expect (how-many empty) 0)
+
+;; Exercise 31.3.5
+(define (add-to-pi n)
+  (define (add-to-pi/acc n acc)
+    (cond
+      [(zero? n) acc]
+      [else (add-to-pi/acc (sub1 n) (add1 acc))]))
+  (add-to-pi/acc n pi))
+
+(check-within (add-to-pi 3) (+ pi 3) 0.00001)
+(check-within (add-to-pi 0) (+ pi 0) 0.00001)
+
+(define (add n x)
+  (define (add/acc n acc)
+    (cond
+      [(zero? n) acc]
+      [else (add/acc (sub1 n) (add1 acc))]))
+  (add/acc n x))
+
+(check-within (add 3 10.0) 13 0.0001)
 (test)
