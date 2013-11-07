@@ -58,6 +58,8 @@
 (check-expect (!2 3) 6)
 (check-expect (!2 5) 120)
 
+(struct node (left right))
+
 (define (height tree)
   (cond
     [(empty? tree) 0]
@@ -65,7 +67,19 @@
 
 (define (height2 tree)
   (define (helper tree acc)
-    [(empty? tree) acc]
-    [else (max (helper (node-left tree) (add1 acc))
-               (helper (node-right tree) (add1 acc)))]))
+    (cond
+      [(empty? tree) acc]
+      [else (max (helper (node-left tree) (add1 acc))
+                 (helper (node-right tree) (add1 acc)))]))
+  (helper tree 0))
+
+;; Exercise 31.3.4
+(define (product lon)
+  (define (product/acc lon acc)
+    (cond
+      [(empty? lon) acc]
+      [else (product/acc (rest lon) (* acc (first lon)))]))
+  (product/acc lon 1))
+
+(check-expect (product (list 1 2 3 4 5)) 120)
 (test)
