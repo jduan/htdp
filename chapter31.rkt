@@ -58,4 +58,14 @@
 (check-expect (!2 3) 6)
 (check-expect (!2 5) 120)
 
+(define (height tree)
+  (cond
+    [(empty? tree) 0]
+    [else (+ 1 (max (height (node-left tree)) (height (node-right tree))))]))
+
+(define (height2 tree)
+  (define (helper tree acc)
+    [(empty? tree) acc]
+    [else (max (helper (node-left tree) (add1 acc))
+               (helper (node-right tree) (add1 acc)))]))
 (test)
