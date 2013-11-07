@@ -39,4 +39,23 @@
 (check-within (sum2 (g-series #i1000)) -0.49746596003269533 0.001)
 (check-within (* 10e15 (sum (g-series #i1000))) -4974659600326939.0 0.001)
 (check-within (* 10e15 (sum2 (g-series #i1000))) -4974659600326953.0 0.001)
+
+(define (! n)
+  (cond
+    [(zero? n) 1]
+    [else (* n (! (sub1 n)))]))
+
+(check-expect (! 3) 6)
+(check-expect (! 5) 120)
+
+(define (!2 n)
+  (define (helper n acc)
+    (cond
+      [(zero? n) acc]
+      [else (helper (sub1 n) (* n acc))]))
+  (helper n 1))
+
+(check-expect (!2 3) 6)
+(check-expect (!2 5) 120)
+
 (test)
