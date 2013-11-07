@@ -147,4 +147,15 @@
 
 (check-expect (to10-general 10 (list 1 0 2)) 102)
 (check-expect (to10-general 8 (list 1 0 2)) 66)
+
+;; Exercise 31.3.8
+(define (is-prime? n)
+  (define (is-prime/acc? i acc)
+    (cond
+      [acc false]
+      [(= i 1) true]
+      [else (is-prime/acc? (sub1 i) (zero? (remainder n i)))]))
+  (is-prime/acc? (sub1 n) true))
+
+(check-expect (is-prime? 3) false)
 (test)
