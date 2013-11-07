@@ -29,4 +29,14 @@
 (check-expect (sum2 (list 1 2 3)) 6)
 (check-expect (sum2 (list )) 0)
 
+;; Exercise 31.3.1
+(define (g-series n)
+  (cond
+    [(zero? n) empty]
+    [else (cons (expt -0.99 n) (g-series (sub1 n)))]))
+
+(check-within (sum (g-series #i1000)) -0.49746596003269394 0.001)
+(check-within (sum2 (g-series #i1000)) -0.49746596003269533 0.001)
+(check-within (* 10e15 (sum (g-series #i1000))) -4974659600326939.0 0.001)
+(check-within (* 10e15 (sum2 (g-series #i1000))) -4974659600326953.0 0.001)
 (test)
