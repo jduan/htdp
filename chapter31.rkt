@@ -125,4 +125,26 @@
 
 (check-expect (make-palindrome '(a b c)) '(a b c b a))
 (check-expect (make-palindrome '(a b c d e)) '(a b c d e d c b a))
+
+
+;; Exercise 31.3.7
+(define (to10 lod)
+  (define (to10/acc lod acc)
+    (cond
+      [(empty? lod) acc]
+      [else (to10/acc (rest lod) (+ (* 10 acc) (first lod)))]))
+  (to10/acc lod 0))
+
+(check-expect (to10 (list 1 0 2)) 102)
+(check-expect (to10 empty) 0)
+
+(define (to10-general base lod)
+  (define (to10-general/acc lod acc)
+    (cond
+      [(empty? lod) acc]
+      [else (to10-general/acc (rest lod) (+ (* base acc) (first lod)))]))
+  (to10-general/acc lod 0))
+
+(check-expect (to10-general 10 (list 1 0 2)) 102)
+(check-expect (to10-general 8 (list 1 0 2)) 66)
 (test)
