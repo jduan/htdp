@@ -113,4 +113,16 @@
   (add/acc n x))
 
 (check-within (add 3 10.0) 13 0.0001)
+
+;; Exercise 31.3.6
+(define (make-palindrome xs)
+  (define (make-palindrome/acc xs acc)
+    (cond
+      [(= 1 (length xs)) acc]
+      [else (make-palindrome/acc (rest xs)
+                                 (cons (first xs) acc))]))
+  (append xs (make-palindrome/acc xs empty)))
+
+(check-expect (make-palindrome '(a b c)) '(a b c b a))
+(check-expect (make-palindrome '(a b c d e)) '(a b c d e d c b a))
 (test)
